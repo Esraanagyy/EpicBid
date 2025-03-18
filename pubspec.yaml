@@ -1,0 +1,48 @@
+name: epicBid
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  carousel_slider: ^5.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^4.0.0
+
+
+flutter:
+
+
+  uses-material-design: true
+
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/fonts/
+
+
+
+  fonts:
+    - family: Inter
+      fonts:
+          - asset: assets/fonts/Inter_18pt-Bold.ttf
+          - asset: assets/fonts/Inter_18pt-Light.ttf
+          - asset: assets/fonts/Inter_18pt-Medium.ttf
+          - asset: assets/fonts/Inter_18pt-Regular.ttf
+          - asset: assets/fonts/Inter_18pt-SemiBold.ttf
+
