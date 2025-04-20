@@ -1,3 +1,4 @@
+import 'package:epicBid/pages/create_auction.dart';
 import 'package:epicBid/widgets/auction_card.dart';
 import 'package:epicBid/widgets/bottom_navigation_bar_widget.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class AuctionPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 800,
+            height: 900,
             child: ListView(
               children: [
                 Padding(
@@ -192,6 +193,13 @@ class AuctionPage extends StatelessWidget {
           ),
         ]),
       ),
+      floatingActionButton: InkWell(
+        onTap: (){
+          Navigator.pushNamed(context, CreateAuction.id);
+        },
+          child: Image.asset('assets/icons/create.png',scale: 1.3,),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: const BottomNavigationBarWidget(
         selectedIndex: 2,
       ),

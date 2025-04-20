@@ -1,3 +1,4 @@
+import 'package:epicBid/pages/chat_page.dart';
 import 'package:epicBid/pages/review_page.dart';
 import 'package:flutter/material.dart';
 
@@ -327,15 +328,15 @@ class AuctionDetailsCard extends StatelessWidget {
                 color: const Color(0xffCCCCCC),
                 borderRadius: BorderRadius.circular(4),
               ),
-              child: const Padding(
-                padding: EdgeInsets.only(
+              child: Padding(
+                padding: const EdgeInsets.only(
                   left: 10,
                   right: 10,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "(Host): Hello My Friend",
                       style: TextStyle(
                         color: Colors.black,
@@ -344,9 +345,14 @@ class AuctionDetailsCard extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    ImageIcon(
-                      AssetImage("assets/icons/chat.png"),
-                      color: Colors.black,
+                    InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, ChatPage.id);
+                      },
+                      child: const ImageIcon(
+                        AssetImage("assets/icons/chat.png"),
+                        color: Colors.black,
+                      ),
                     )
                   ],
                 ),
