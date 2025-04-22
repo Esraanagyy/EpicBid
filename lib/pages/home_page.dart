@@ -1,3 +1,4 @@
+import 'package:epicBid/pages/cart_page.dart';
 import 'package:epicBid/widgets/bottom_navigation_bar_widget.dart';
 import 'package:epicBid/widgets/flash_offer_card.dart';
 import 'package:epicBid/widgets/offer_card.dart';
@@ -71,15 +72,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(
+                  Padding(
+                    padding: const EdgeInsets.only(
                       top: 70,
                       left: 18,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Welcome My Friend",
                           style: TextStyle(
                             color: Colors.white,
@@ -88,12 +89,17 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.w300,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 210,
                         ),
-                        ImageIcon(
-                          AssetImage("assets/icons/cart.png"),
-                          color: Colors.white,
+                        InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(context, CartPage.id);
+                          },
+                          child: const ImageIcon(
+                            AssetImage("assets/icons/cart.png"),
+                            color: Colors.white,
+                          ),
                         ),
                       ],
                     ),

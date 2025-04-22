@@ -1,12 +1,15 @@
 import 'package:epicBid/pages/additional_information_page.dart';
 import 'package:epicBid/pages/auction_details_page.dart';
 import 'package:epicBid/pages/auction_page.dart';
+import 'package:epicBid/pages/cart_page.dart';
 import 'package:epicBid/pages/chat_page.dart';
+import 'package:epicBid/pages/check_out_page.dart';
 import 'package:epicBid/pages/create_auction.dart';
 import 'package:epicBid/pages/create_done.dart';
 import 'package:epicBid/pages/forgot_password_page.dart';
 import 'package:epicBid/pages/home_page.dart';
 import 'package:epicBid/pages/login_page.dart';
+import 'package:epicBid/pages/payment_done.dart';
 import 'package:epicBid/pages/product_details.dart';
 import 'package:epicBid/pages/profile_page.dart';
 import 'package:epicBid/pages/register_page.dart';
@@ -43,6 +46,9 @@ class EpicBid extends StatelessWidget {
         ChatPage.id: (context) => const ChatPage(),
         CreateAuction.id: (context) => const CreateAuction(),
         CreateDone.id: (context) => const CreateDone(),
+        CartPage.id: (context) => const CartPage(),
+        CheckOutPage.id: (context) => const CheckOutPage(),
+        PaymentDone.id: (context) => const PaymentDone(),
       },
       initialRoute: SplashScreen.id,
     );
