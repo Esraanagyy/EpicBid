@@ -182,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 80),
                   child: Container(
-                    height: 255,
+                    height: 300,
                     width: 440,
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -191,95 +191,98 @@ class _LoginPageState extends State<LoginPage> {
                         topRight: Radius.circular(50), // Use Radius.circular
                       ),
                     ), // Fixed width
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, ForgotPasswordPage.id);
-                            },
-                            child: const Text(
+                    child:  Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, ForgotPasswordPage.id);
+                                },
+                                child: const Text(
+                                  textAlign: TextAlign.center,
+                                  "Forgot Password?",
+                                  style: TextStyle(
+                                    color: Color(0xff2D5356),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 20, right: 50, left: 50),
+                              child: FilledButton(
+                                style: FilledButton.styleFrom(
+                                  elevation: 6,
+                                  shadowColor: Colors.black,
+                                  side: const BorderSide(color: Colors.white),
+                                  fixedSize: const Size(340, 54),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 12),
+                                  backgroundColor: const Color(0xff2D5356),
+                                ),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, HomePage.id);
+                                },
+                                child: const Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const Text(
                               textAlign: TextAlign.center,
-                              "Forgot Password?",
-                              style: TextStyle(
-                                color: Color(0xff2D5356),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 20, right: 50, left: 50),
-                          child: FilledButton(
-                            style: FilledButton.styleFrom(
-                              elevation: 6,
-                              shadowColor: Colors.black,
-                              side: const BorderSide(color: Colors.white),
-                              fixedSize: const Size(340, 54),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 12),
-                              backgroundColor: const Color(0xff2D5356),
-                            ),
-                            onPressed: () {
-                              Navigator.pushNamed(context, HomePage.id);
-                            },
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w300,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Text(
-                          textAlign: TextAlign.center,
-                          "or",
-                          style: TextStyle(
-                            color: Color(0xff2D5356),
-                            fontFamily: 'Inter',
-                            fontSize: 15,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 8, right: 50, left: 50),
-                          child: FilledButton(
-                            style: FilledButton.styleFrom(
-                              elevation: 6,
-                              shadowColor: Colors.black,
-                              side: const BorderSide(color: Color(0xff2D5356)),
-                              fixedSize: const Size(340, 54),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 12),
-                              backgroundColor: const Color(0xff9BC7CA),
-                            ),
-                            onPressed: () {
-                              Navigator.pushNamed(context, RegisterPage.id);
-                            },
-                            child: const Text(
-                              "Create an account",
+                              "or",
                               style: TextStyle(
                                 color: Color(0xff2D5356),
                                 fontFamily: 'Inter',
-                                fontWeight: FontWeight.w300,
                                 fontSize: 15,
                               ),
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8, right: 50, left: 50),
+                              child: FilledButton(
+                                style: FilledButton.styleFrom(
+                                  elevation: 6,
+                                  shadowColor: Colors.black,
+                                  side: const BorderSide(color: Color(0xff2D5356)),
+                                  fixedSize: const Size(340, 54),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 12),
+                                  backgroundColor: const Color(0xff9BC7CA),
+                                ),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, RegisterPage.id);
+                                },
+                                child: const Text(
+                                  "Create an account",
+                                  style: TextStyle(
+                                    color: Color(0xff2D5356),
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                    ),
                     ),
                   ),
-                ),
               ],
             ),
           ),

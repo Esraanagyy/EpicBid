@@ -1,3 +1,4 @@
+import 'package:epicBid/pages/cart_page.dart';
 import 'package:epicBid/widgets/bottom_navigation_bar_widget.dart';
 import 'package:epicBid/widgets/search_widget.dart';
 import 'package:epicBid/widgets/store_card.dart';
@@ -13,15 +14,15 @@ class StorePage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(children: [
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               top: 50,
               left: 18,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "EpicStore",
                   style: TextStyle(
                     color: Colors.black,
@@ -31,10 +32,15 @@ class StorePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(right: 16),
-                  child: ImageIcon(
-                    AssetImage("assets/icons/cart.png"),
-                    color: Color(0xff2D5356),
+                  padding: const EdgeInsets.only(right: 16),
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, CartPage.id);
+                    },
+                    child: const ImageIcon(
+                      AssetImage("assets/icons/cart.png"),
+                      color: Color(0xff2D5356),
+                    ),
                   ),
                 ),
               ],

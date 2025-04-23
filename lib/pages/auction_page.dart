@@ -3,6 +3,8 @@ import 'package:epicBid/widgets/auction_card.dart';
 import 'package:epicBid/widgets/bottom_navigation_bar_widget.dart';
 import 'package:flutter/material.dart';
 
+import 'cart_page.dart';
+
 class AuctionPage extends StatelessWidget {
   const AuctionPage({super.key});
   static String id = 'auction';
@@ -13,15 +15,15 @@ class AuctionPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(children: [
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               top: 50,
               left: 18,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "Auctions",
                   style: TextStyle(
                     color: Colors.black,
@@ -31,10 +33,15 @@ class AuctionPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(right: 16),
-                  child: ImageIcon(
-                    AssetImage("assets/icons/cart.png"),
-                    color: Color(0xff2D5356),
+                  padding: const EdgeInsets.only(right: 16),
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, CartPage.id);
+                    },
+                    child: const ImageIcon(
+                      AssetImage("assets/icons/cart.png"),
+                      color: Color(0xff2D5356),
+                    ),
                   ),
                 ),
               ],

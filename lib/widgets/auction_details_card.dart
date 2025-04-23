@@ -1,3 +1,4 @@
+import 'package:epicBid/pages/cart_page.dart';
 import 'package:epicBid/pages/chat_page.dart';
 import 'package:epicBid/pages/review_page.dart';
 import 'package:flutter/material.dart';
@@ -426,13 +427,18 @@ class AuctionDetailsCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 63,
-                  height: 63,
-                  decoration: BoxDecoration(
-                      color: const Color(0xffD09423),
-                      borderRadius: BorderRadius.circular(43)),
-                  child: Image.asset('assets/icons/cart2.png'),
+                InkWell(
+                  onTap:(){
+                    Navigator.pushNamed(context, CartPage.id);
+                  },
+                  child: Container(
+                    width: 63,
+                    height: 63,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffD09423),
+                        borderRadius: BorderRadius.circular(43)),
+                    child: Image.asset('assets/icons/cart2.png'),
+                  ),
                 ),
                 Container(
                   width: 284,

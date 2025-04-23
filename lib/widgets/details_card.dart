@@ -1,3 +1,4 @@
+import 'package:epicBid/pages/cart_page.dart';
 import 'package:epicBid/pages/review_page.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ class DetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 400,
-      height: 470,
+      height: 465,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(32),
@@ -285,13 +286,18 @@ class DetailsCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 63,
-                  height: 63,
-                  decoration: BoxDecoration(
-                      color: const Color(0xffD09423),
-                      borderRadius: BorderRadius.circular(43)),
-                  child: Image.asset('assets/icons/cart2.png'),
+                InkWell(
+                  onTap:(){
+                    Navigator.pushNamed(context, CartPage.id);
+                  },
+                  child: Container(
+                    width: 63,
+                    height: 63,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffD09423),
+                        borderRadius: BorderRadius.circular(43)),
+                    child: Image.asset('assets/icons/cart2.png'),
+                  ),
                 ),
                 Container(
                   width: 284,
