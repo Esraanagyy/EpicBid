@@ -15,6 +15,7 @@ import 'package:epicBid/pages/language_page.dart';
 import 'package:epicBid/pages/login_page.dart';
 import 'package:epicBid/pages/my_auctions_page.dart';
 import 'package:epicBid/pages/my_products_page.dart';
+import 'package:epicBid/pages/onboarding_page.dart';
 import 'package:epicBid/pages/payment_done.dart';
 import 'package:epicBid/pages/product_details.dart';
 import 'package:epicBid/pages/profile_page.dart';
@@ -61,6 +62,7 @@ class EpicBid extends StatelessWidget {
         LanguagePage.id: (context) => const LanguagePage(),
         MyProductsPage.id: (context) => const MyProductsPage(),
         MyAuctionsPage.id: (context) => const MyAuctionsPage(),
+        OnboardingPage.id: (context) => const OnboardingPage(),
       },
       initialRoute: SplashScreen.id,
     );

@@ -43,7 +43,7 @@ class ForgotPasswordPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 170),
                 child: Container(
-                  height: 399,
+                  height: 430,
                   width: 440,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
@@ -61,7 +61,7 @@ class ForgotPasswordPage extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(
-                      top: 36,
+                      top: 70,
                       //left: 58,
                     ),
                     child: Column(
