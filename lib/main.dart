@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:epicBid/pages/additional_information_page.dart';
 import 'package:epicBid/pages/address_page.dart';
 import 'package:epicBid/pages/auction_details_page.dart';
@@ -24,6 +25,7 @@ import 'package:epicBid/pages/review_page.dart';
 import 'package:epicBid/pages/splash_screen.dart';
 import 'package:epicBid/pages/store_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
   runApp(const EpicBid());
@@ -39,7 +41,7 @@ class EpicBid extends StatelessWidget {
       routes: {
         SplashScreen.id: (context) => const SplashScreen(),
         LoginPage.id: (context) => const LoginPage(),
-        RegisterPage.id: (context) => const RegisterPage(),
+        RegisterPage.id: (context) => RegisterPage(),
         ForgotPasswordPage.id: (context) => const ForgotPasswordPage(),
         HomePage.id: (context) => HomePage(),
         StorePage.id: (context) => const StorePage(),
@@ -65,6 +67,9 @@ class EpicBid extends StatelessWidget {
         OnboardingPage.id: (context) => const OnboardingPage(),
       },
       initialRoute: SplashScreen.id,
+      builder: EasyLoading.init(
+        builder: BotToastInit(),
+      ),
     );
   }
 }
