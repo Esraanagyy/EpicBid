@@ -21,9 +21,11 @@ import 'package:epicBid/pages/payment_done.dart';
 import 'package:epicBid/pages/product_details.dart';
 import 'package:epicBid/pages/profile_page.dart';
 import 'package:epicBid/pages/register_page.dart';
+import 'package:epicBid/pages/reset_password_page.dart';
 import 'package:epicBid/pages/review_page.dart';
 import 'package:epicBid/pages/splash_screen.dart';
 import 'package:epicBid/pages/store_page.dart';
+import 'package:epicBid/pages/verify_code_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -65,6 +67,8 @@ class EpicBid extends StatelessWidget {
         MyProductsPage.id: (context) => const MyProductsPage(),
         MyAuctionsPage.id: (context) => const MyAuctionsPage(),
         OnboardingPage.id: (context) => const OnboardingPage(),
+        VerifyCodePage.id: (context) => const VerifyCodePage(),
+        ResetPasswordPage.id: (context) => const ResetPasswordPage(),
       },
       initialRoute: SplashScreen.id,
       builder: EasyLoading.init(

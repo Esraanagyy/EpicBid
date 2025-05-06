@@ -1,20 +1,21 @@
-import 'package:epicBid/cubits/auth_cubit/auth_cubit.dart';
-import 'package:epicBid/cubits/auth_cubit/auth_states.dart';
-import 'package:epicBid/pages/login_page.dart';
-import 'package:epicBid/pages/verify_code_page.dart';
-import 'package:epicBid/services/snack_bar_service.dart';
+import 'package:epicBid/pages/reset_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({super.key});
-  static String id = 'password';
+import '../cubits/auth_cubit/auth_cubit.dart';
+import '../cubits/auth_cubit/auth_states.dart';
+import '../services/snack_bar_service.dart';
+
+class VerifyCodePage extends StatefulWidget {
+  const VerifyCodePage({super.key});
+  static String id = 'code';
 
   @override
-  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+  State<VerifyCodePage> createState() => _VerifyCodePageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class _VerifyCodePageState extends State<VerifyCodePage> {
+  final codeController = TextEditingController();
   final emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   @override
@@ -23,11 +24,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       create: (context) => AuthCubit(),
       child: BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state) {
-          if (state is PasswordSuccessState) {
-            SnackBarService.showSuccessMessage('check your email!');
-            Navigator.pushNamed(context, VerifyCodePage.id);
-          } else if (state is PasswordFailedState) {
-            SnackBarService.showErrorMessage(state.message);
+          if (state is VerifySuccessState) {
+            print("Show success message");
+            SnackBarService.showSuccessMessage(
+                'Password is Reset Successfully!');
+            Navigator.pushNamed(context, ResetPasswordPage.id);
+          } else if (state is VerifyFailedState) {
+            print('error');
+            SnackBarService.showErrorMessage('Something Went Wrong!');
           }
         },
         builder: (context, state) {
@@ -90,7 +94,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(
-                              top: 70,
+                              top: 50,
                               //left: 58,
                             ),
                             child: Column(
@@ -99,7 +103,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 const Padding(
                                   padding: EdgeInsets.only(left: 58),
                                   child: Text(
-                                    "Email",
+                                    'Email',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Inter',
@@ -110,7 +114,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                    top: 20,
+                                    top: 10,
                                     right: 24,
                                     left: 58,
                                   ),
@@ -133,9 +137,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                     ),
                                     cursorColor: Colors.white,
                                     decoration: InputDecoration(
-                                      prefixIcon: const ImageIcon(
-                                        AssetImage("assets/icons/email.png"),
-                                        color: Colors.white,
+                                      prefixIcon: const Icon(
+                                        Icons.email,
+                                        color: Color(
+                                          0xff979797,
+                                        ),
                                       ),
                                       hintText: "Email Address",
                                       hintStyle: const TextStyle(
@@ -161,9 +167,70 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                     ),
                                   ),
                                 ),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20, left: 58),
+                                  child: Text(
+                                    "Reset Code",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Inter',
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                    top: 40,
+                                    top: 10,
+                                    right: 24,
+                                    left: 58,
+                                  ),
+                                  child: TextFormField(
+                                    controller: codeController,
+                                    validator: (input) {
+                                      if (codeController.text.isEmpty) {
+                                        return "please enter your reset code";
+                                      }
+                                      return null;
+                                    },
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                    cursorColor: Colors.white,
+                                    decoration: InputDecoration(
+                                      prefixIcon: const Icon(
+                                        Icons.password,
+                                        color: Color(
+                                          0xff979797,
+                                        ),
+                                      ),
+                                      hintText: "Reset Code",
+                                      hintStyle: const TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 16,
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(32),
+                                        borderSide: const BorderSide(
+                                          color: Colors.white,
+                                          width: 0.8,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(32),
+                                        borderSide: const BorderSide(
+                                          color: Colors.white,
+                                          width: 0.8,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 20,
                                     right: 24,
                                     bottom: 50,
                                     left: 58,
@@ -182,13 +249,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                     onPressed: () {
                                       if (formKey.currentState!.validate()) {
                                         BlocProvider.of<AuthCubit>(context)
-                                            .forgotPassword(
+                                            .verifyCode(
                                           email: emailController.text,
+                                          code: int.parse(codeController.text),
                                         );
                                       }
                                     },
                                     child: const Text(
-                                      "Send Code",
+                                      "Reset Password",
                                       style: TextStyle(
                                         color: Color(0xff2D5356),
                                         fontFamily: 'Inter',
@@ -198,26 +266,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                     ),
                                   ),
                                 ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, LoginPage.id);
-                                    },
-                                    child: const Text(
-                                      "Back to Login",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Inter',
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w300,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                    ),
-                                  ),
-                                )
                               ],
                             ),
                           ),

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
   //register service
+
   void register(
       {required String name,
       required String userName,
@@ -57,6 +58,58 @@ class AuthCubit extends Cubit<AuthStates> {
       emit(LoginSuccessState());
     } else {
       emit(LoginFailedState(message: responseBody['message']));
+    }
+  }
+
+  //forget password service
+  void forgotPassword({required String email}) async {
+    emit(PasswordLoadingState());
+    http.Response response = await http.post(
+      Uri.parse('http://ebic-bid11.runasp.net/api/Account/forgetpassword'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+      }),
+    );
+    var responseBody = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      emit(PasswordSuccessState());
+    } else {
+      emit(PasswordFailedState(message: responseBody['message']));
+    }
+  }
+
+  //verify code
+  void verifyCode({required String email, required int code}) async {
+    http.Response response = await http.post(
+      Uri.parse('http://ebic-bid11.runasp.net/api/Account/verifycode'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+        'resetcode': code,
+      }),
+    );
+    if (response.statusCode == 200) {
+      emit(VerifySuccessState());
+    } else {
+      emit(VerifyFailedState());
+    }
+  }
+
+  //reset password
+  void resetPassword({required String email, required String password}) async {
+    http.Response response = await http.put(
+      Uri.parse('http://ebic-bid11.runasp.net/api/Account/resetpassword'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+        'newpassword': password,
+      }),
+    );
+    if (response.statusCode == 200) {
+      emit(ResetSuccessState());
+    } else {
+      emit(ResetFailedState());
     }
   }
 }

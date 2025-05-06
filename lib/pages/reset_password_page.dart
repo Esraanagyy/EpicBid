@@ -1,20 +1,21 @@
-import 'package:epicBid/cubits/auth_cubit/auth_cubit.dart';
-import 'package:epicBid/cubits/auth_cubit/auth_states.dart';
 import 'package:epicBid/pages/login_page.dart';
-import 'package:epicBid/pages/verify_code_page.dart';
-import 'package:epicBid/services/snack_bar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({super.key});
-  static String id = 'password';
+import '../cubits/auth_cubit/auth_cubit.dart';
+import '../cubits/auth_cubit/auth_states.dart';
+import '../services/snack_bar_service.dart';
+
+class ResetPasswordPage extends StatefulWidget {
+  const ResetPasswordPage({super.key});
+  static String id = 'reset';
 
   @override
-  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+  State<ResetPasswordPage> createState() => _VerifyCodePageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class _VerifyCodePageState extends State<ResetPasswordPage> {
+  final passwordController = TextEditingController();
   final emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   @override
@@ -23,11 +24,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       create: (context) => AuthCubit(),
       child: BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state) {
-          if (state is PasswordSuccessState) {
-            SnackBarService.showSuccessMessage('check your email!');
-            Navigator.pushNamed(context, VerifyCodePage.id);
-          } else if (state is PasswordFailedState) {
-            SnackBarService.showErrorMessage(state.message);
+          if (state is ResetSuccessState) {
+            SnackBarService.showSuccessMessage(
+                'Your Password has changed Successfully!');
+            Navigator.pushNamed(context, LoginPage.id);
+          } else if (state is ResetFailedState) {
+            SnackBarService.showErrorMessage('Something Went Wrong!');
           }
         },
         builder: (context, state) {
@@ -90,7 +92,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(
-                              top: 70,
+                              top: 50,
                               //left: 58,
                             ),
                             child: Column(
@@ -99,7 +101,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 const Padding(
                                   padding: EdgeInsets.only(left: 58),
                                   child: Text(
-                                    "Email",
+                                    'Email',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Inter',
@@ -110,7 +112,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                    top: 20,
+                                    top: 10,
                                     right: 24,
                                     left: 58,
                                   ),
@@ -133,9 +135,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                     ),
                                     cursorColor: Colors.white,
                                     decoration: InputDecoration(
-                                      prefixIcon: const ImageIcon(
-                                        AssetImage("assets/icons/email.png"),
-                                        color: Colors.white,
+                                      prefixIcon: const Icon(
+                                        Icons.email,
+                                        color: Color(
+                                          0xff979797,
+                                        ),
                                       ),
                                       hintText: "Email Address",
                                       hintStyle: const TextStyle(
@@ -161,9 +165,70 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                     ),
                                   ),
                                 ),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20, left: 58),
+                                  child: Text(
+                                    "New Password",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Inter',
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                    top: 40,
+                                    top: 10,
+                                    right: 24,
+                                    left: 58,
+                                  ),
+                                  child: TextFormField(
+                                    controller: passwordController,
+                                    validator: (input) {
+                                      if (passwordController.text.isEmpty) {
+                                        return "please enter your New Password";
+                                      }
+                                      return null;
+                                    },
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                    cursorColor: Colors.white,
+                                    decoration: InputDecoration(
+                                      prefixIcon: const Icon(
+                                        Icons.password,
+                                        color: Color(
+                                          0xff979797,
+                                        ),
+                                      ),
+                                      hintText: "New Password",
+                                      hintStyle: const TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 16,
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(32),
+                                        borderSide: const BorderSide(
+                                          color: Colors.white,
+                                          width: 0.8,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(32),
+                                        borderSide: const BorderSide(
+                                          color: Colors.white,
+                                          width: 0.8,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 20,
                                     right: 24,
                                     bottom: 50,
                                     left: 58,
@@ -182,13 +247,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                     onPressed: () {
                                       if (formKey.currentState!.validate()) {
                                         BlocProvider.of<AuthCubit>(context)
-                                            .forgotPassword(
+                                            .resetPassword(
                                           email: emailController.text,
+                                          password: passwordController.text,
                                         );
                                       }
                                     },
                                     child: const Text(
-                                      "Send Code",
+                                      "Login Now",
                                       style: TextStyle(
                                         color: Color(0xff2D5356),
                                         fontFamily: 'Inter',
@@ -198,26 +264,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                     ),
                                   ),
                                 ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, LoginPage.id);
-                                    },
-                                    child: const Text(
-                                      "Back to Login",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Inter',
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w300,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                    ),
-                                  ),
-                                )
                               ],
                             ),
                           ),

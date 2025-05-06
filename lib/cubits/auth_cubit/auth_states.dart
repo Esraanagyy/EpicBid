@@ -21,3 +21,25 @@ class LoginFailedState extends AuthStates {
 
   LoginFailedState({required this.message});
 }
+
+class PasswordLoadingState extends AuthStates {}
+
+class PasswordSuccessState extends AuthStates {}
+
+class PasswordFailedState extends AuthStates {
+  String message;
+
+  PasswordFailedState({required this.message});
+}
+
+class VerifyLoadingState extends AuthStates {}
+
+class VerifySuccessState extends AuthStates {}
+
+class VerifyFailedState extends AuthStates {}
+
+class ResetLoadingState extends AuthStates {}
+
+class ResetSuccessState extends AuthStates {}
+
+class ResetFailedState extends AuthStates {}
