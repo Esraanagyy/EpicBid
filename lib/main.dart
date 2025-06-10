@@ -5,6 +5,7 @@ import 'package:epicBid/pages/auction_details_page.dart';
 import 'package:epicBid/pages/auction_page.dart';
 import 'package:epicBid/pages/cart_page.dart';
 import 'package:epicBid/pages/chat_page.dart';
+import 'package:epicBid/pages/chatbot_page.dart';
 import 'package:epicBid/pages/check_out_page.dart';
 import 'package:epicBid/pages/create_auction.dart';
 import 'package:epicBid/pages/create_done.dart';
@@ -90,6 +91,7 @@ class EpicBid extends StatelessWidget {
         OnboardingPage.id: (context) => const OnboardingPage(),
         VerifyCodePage.id: (context) => const VerifyCodePage(),
         ResetPasswordPage.id: (context) => const ResetPasswordPage(),
+        ChatBotPage.id: (context) => const ChatBotPage(),
       },
       initialRoute: SplashScreen.id,
       builder: EasyLoading.init(

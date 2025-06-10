@@ -357,7 +357,24 @@ class AuctionDetailsCard extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, ChatPage.id);
+                        final productId = ModalRoute.of(context)
+                                ?.settings
+                                .arguments is Map<String, dynamic>
+                            ? (ModalRoute.of(context)?.settings.arguments
+                                    as Map<String, dynamic>)['id']
+                                ?.toString()
+                            : 'default_id';
+
+                        Navigator.pushNamed(
+                          context,
+                          ChatPage.id,
+                          arguments: {
+                            'productId': productId,
+                            'productName': name,
+                            'sellerName':
+                                'Sara Nagy', // From your existing card
+                          },
+                        );
                       },
                       child: const ImageIcon(
                         AssetImage("assets/icons/chat.png"),

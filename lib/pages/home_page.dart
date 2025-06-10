@@ -1,4 +1,5 @@
 import 'package:epicBid/pages/cart_page.dart';
+import 'package:epicBid/pages/chatbot_page.dart';
 import 'package:epicBid/widgets/bottom_navigation_bar_widget.dart';
 import 'package:epicBid/widgets/flash_offer_card.dart';
 import 'package:epicBid/widgets/offer_card.dart';
@@ -93,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                           width: 210,
                         ),
                         InkWell(
-                          onTap: (){
+                          onTap: () {
                             Navigator.pushNamed(context, CartPage.id);
                           },
                           child: const ImageIcon(
@@ -379,6 +380,22 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, ChatBotPage.id);
+        },
+        backgroundColor: const Color(0xff2D5356),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+        elevation: 4,
+        child: const Icon(
+          Icons.contact_support,
+          color: Colors.white,
+          size: 28,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: const BottomNavigationBarWidget(
         selectedIndex: 0,
       ),

@@ -9,8 +9,6 @@ import '../../models/product_details_model.dart';
 
 class ProductCubit extends Cubit<ProductStates> {
   ProductCubit() : super(ProductInitialState());
-//http://ebic-bid11.runasp.net/api/Product/GetAllProducts?pageindex=20&Pagesize=300
-  // http://ebic-bid11.runasp.net/api/Product/GetAllProducts
 
   //get products
   List<ProductModel> products = [];
