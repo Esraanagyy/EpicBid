@@ -4,8 +4,17 @@ import 'package:epicBid/pages/review_page.dart';
 import 'package:flutter/material.dart';
 
 class AuctionDetailsCard extends StatelessWidget {
-  const AuctionDetailsCard({super.key});
-
+  AuctionDetailsCard({
+    super.key,
+    required this.name,
+    required this.price,
+    required this.description,
+    required this.rate,
+  });
+  String name;
+  String price;
+  String description;
+  String rate;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,16 +42,16 @@ class AuctionDetailsCard extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               top: 10,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  "Luxe sofa Yellow",
-                  style: TextStyle(
+                  name,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w600,
@@ -50,8 +59,8 @@ class AuctionDetailsCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "1800 LE",
-                  style: TextStyle(
+                  price,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w500,
@@ -88,14 +97,14 @@ class AuctionDetailsCard extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               top: 5,
               left: 18,
             ),
             child: Text(
-              "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per ....",
-              style: TextStyle(
+              description,
+              style: const TextStyle(
                 color: Colors.black,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w400,
@@ -225,11 +234,11 @@ class AuctionDetailsCard extends StatelessWidget {
                   AssetImage("assets/icons/star.png"),
                   color: Color(0xffD09423),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 8),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
                   child: Text(
-                    "5.0",
-                    style: TextStyle(
+                    rate,
+                    style: const TextStyle(
                       color: Color(0xff4C4C4C),
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w500,
@@ -347,7 +356,7 @@ class AuctionDetailsCard extends StatelessWidget {
                       ),
                     ),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         Navigator.pushNamed(context, ChatPage.id);
                       },
                       child: const ImageIcon(
@@ -428,7 +437,7 @@ class AuctionDetailsCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap:(){
+                  onTap: () {
                     Navigator.pushNamed(context, CartPage.id);
                   },
                   child: Container(

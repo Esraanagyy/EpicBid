@@ -45,19 +45,43 @@ class AuthCubit extends Cubit<AuthStates> {
   //login services
   void login({required String email, required String password}) async {
     emit(LoginLoadingState());
-    http.Response response = await http.post(
-      Uri.parse('http://ebic-bid11.runasp.net/api/Account/login'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'email': email,
-        'password': password,
-      }),
-    );
-    var responseBody = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      emit(LoginSuccessState());
-    } else {
-      emit(LoginFailedState(message: responseBody['message']));
+
+    try {
+      final response = await http.post(
+        Uri.parse('http://ebic-bid11.runasp.net/api/Account/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': email,
+          'password': password,
+        }),
+      );
+
+      // 🔍 Debugging output
+      print('Status code: ${response.statusCode}');
+      print('Headers: ${response.headers}');
+      print('Response body: "${response.body}"');
+
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+          final responseBody = jsonDecode(response.body);
+          print('Decoded JSON: $responseBody');
+          emit(LoginSuccessState());
+        } else {
+          // ✅ Handle empty body but successful status
+          print('Empty body but login successful');
+          emit(LoginSuccessState());
+        }
+      } else {
+        final responseBody =
+            response.body.isNotEmpty ? jsonDecode(response.body) : null;
+        final errorMsg = responseBody?['message'] ??
+            'Login failed with status ${response.statusCode}';
+        emit(LoginFailedState(message: errorMsg));
+      }
+    } catch (e) {
+      print('Exception during login: $e');
+      emit(
+          LoginFailedState(message: 'Something went wrong. Please try again.'));
     }
   }
 

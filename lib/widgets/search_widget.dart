@@ -12,6 +12,7 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: (input) {},
       style: TextStyle(
         color: textColor,
       ),

@@ -1,232 +1,219 @@
+import 'package:epicBid/cubits/product_cubit/product_cubit.dart';
 import 'package:epicBid/pages/cart_page.dart';
+import 'package:epicBid/pages/product_details.dart';
 import 'package:epicBid/widgets/bottom_navigation_bar_widget.dart';
-import 'package:epicBid/widgets/search_widget.dart';
-import 'package:epicBid/widgets/store_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../cubits/product_cubit/product_states.dart';
+import '../widgets/store_card.dart';
 
 class StorePage extends StatelessWidget {
-  const StorePage({super.key});
+  StorePage({super.key});
   static String id = 'store';
+
+  final Map<String, String> imageMap = {
+    'CloudSoft Pillow': 'assets/images/pillow2.webp',
+    'ErgoComfort Chair': 'assets/images/yellow chair.png',
+    'Luna Circular Table': 'assets/images/top table.png',
+    'Oakwood Dining Table': 'assets/images/second table.png',
+    'Starlight Desk Lamp': 'assets/images/top lamp.png',
+  };
+
+  late ProductCubit productCubit;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 50,
-              left: 18,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "EpicStore",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Inter',
-                    fontSize: 26,
-                    fontWeight: FontWeight.w500,
+    return BlocProvider(
+      create: (context) => ProductCubit()..getProducts(),
+      child: BlocConsumer<ProductCubit, ProductStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          final cubit = BlocProvider.of<ProductCubit>(context);
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: SingleChildScrollView(
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 50,
+                    left: 18,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "EpicStore",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Inter',
+                          fontSize: 26,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, CartPage.id);
+                          },
+                          child: const ImageIcon(
+                            AssetImage("assets/icons/cart.png"),
+                            color: Color(0xff2D5356),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: InkWell(
-                    onTap: (){
-                      Navigator.pushNamed(context, CartPage.id);
-                    },
-                    child: const ImageIcon(
-                      AssetImage("assets/icons/cart.png"),
-                      color: Color(0xff2D5356),
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                      left: 18,
+                      right: 18,
+                    ),
+                    child: TextFormField(
+                      onChanged: (input) {
+                        cubit.filterProducts(input: input);
+                      },
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                      cursorColor: const Color(0xff468286),
+                      decoration: InputDecoration(
+                        fillColor: const Color(0xff468286),
+                        focusColor: const Color(0xff468286),
+                        filled: true,
+                        prefixIcon: const ImageIcon(
+                          AssetImage("assets/icons/search.png"),
+                          color: Colors.white,
+                        ),
+                        hintText: "  Search In Store",
+                        hintStyle: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w300,
+                          fontSize: 18,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(32),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              18), // Same radius as focusedBorder
+                        ),
+                      ),
+                    )),
+                const Padding(
+                  padding: EdgeInsets.only(
+                    top: 20,
+                    left: 5,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "All",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        "  Chairs",
+                        style: TextStyle(
+                          color: Color(0xff4C4C4C),
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        "  Tables",
+                        style: TextStyle(
+                          color: Color(0xff4C4C4C),
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        "  Lamps",
+                        style: TextStyle(
+                          color: Color(0xff4C4C4C),
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        "  Pillows",
+                        style: TextStyle(
+                          color: Color(0xff4C4C4C),
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 800,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: cubit.filteredProducts.isEmpty
+                          ? cubit.products.length
+                          : cubit.filteredProducts.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 15,
+                        childAspectRatio: 0.7,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        final productList = cubit.filteredProducts.isEmpty
+                            ? cubit.products
+                            : cubit.filteredProducts;
+
+                        final product = productList[index];
+                        final imagePath = imageMap[product.name ?? ''] ??
+                            'assets/images/default.png';
+                        return InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              ProductDetails.id,
+                              arguments: {
+                                'id': product.id,
+                                'image': imagePath,
+                              },
+                            );
+                          },
+                          child: StoreCard(
+                            color: Colors.grey.shade200,
+                            productName: product.name ?? '',
+                            image: imagePath,
+                            price: '${product.price ?? 0} LE',
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
-              ],
+              ]),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 20,
-              left: 18,
-              right: 18,
+            bottomNavigationBar: const BottomNavigationBarWidget(
+              selectedIndex: 1,
             ),
-            child: SearchWidget(
-              textColor: Colors.white,
-              fillColor: const Color(0xff468286),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(
-              top: 20,
-              left: 5,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  "All",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                  ),
-                ),
-                Text(
-                  "  Chairs",
-                  style: TextStyle(
-                    color: Color(0xff4C4C4C),
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                  ),
-                ),
-                Text(
-                  "  Tables",
-                  style: TextStyle(
-                    color: Color(0xff4C4C4C),
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                  ),
-                ),
-                Text(
-                  "  Lamps",
-                  style: TextStyle(
-                    color: Color(0xff4C4C4C),
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                  ),
-                ),
-                Text(
-                  "  Pillows",
-                  style: TextStyle(
-                    color: Color(0xff4C4C4C),
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 800,
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 15,
-                    left: 18,
-                    right: 18,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      StoreCard(
-                        color: const Color(0xffF9E899),
-                        productName: 'Modern chair',
-                        image: 'assets/images/yellow chair.png',
-                        price: '1200 LE',
-                        height: 246,
-                      ),
-                      StoreCard(
-                        color: const Color(0xff936B49),
-                        productName: 'Modern Table',
-                        image: 'assets/images/top table.png',
-                        price: '800 LE',
-                        height: 296,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 18,
-                    right: 18,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      StoreCard(
-                        color: const Color(0xffE98B44),
-                        productName: 'Light Lamp',
-                        image: 'assets/images/top lamp.png',
-                        price: '1500 LE',
-                        height: 296,
-                      ),
-                      StoreCard(
-                        color: const Color(0xff946355),
-                        productName: 'Modern chair',
-                        image: 'assets/images/brown chair.png',
-                        price: '1200 LE',
-                        height: 246,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 15,
-                    left: 18,
-                    right: 18,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      StoreCard(
-                        color: const Color(0xffCA9991),
-                        productName: 'Modern chair',
-                        image: 'assets/images/pink.png',
-                        price: '1200 LE',
-                        height: 246,
-                      ),
-                      StoreCard(
-                        color: Colors.grey.shade100,
-                        productName: 'Modern Pillow',
-                        image: 'assets/images/big pillow.png',
-                        price: '800 LE',
-                        height: 296,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 18,
-                    right: 18,
-                    bottom: 120,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      StoreCard(
-                        color: const Color(0xff936B49),
-                        productName: 'Modern Table',
-                        image: 'assets/images/top table.png',
-                        price: '800 LE',
-                        height: 296,
-                      ),
-                      StoreCard(
-                        color: const Color(0xffF9E899),
-                        productName: 'Modern chair',
-                        image: 'assets/images/yellow chair.png',
-                        price: '1200 LE',
-                        height: 246,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ]),
-      ),
-      bottomNavigationBar: const BottomNavigationBarWidget(
-        selectedIndex: 1,
+          );
+        },
       ),
     );
   }

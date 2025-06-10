@@ -27,7 +27,10 @@ import 'package:epicBid/pages/splash_screen.dart';
 import 'package:epicBid/pages/store_page.dart';
 import 'package:epicBid/pages/verify_code_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import 'cubits/product_cubit/product_cubit.dart';
 
 void main() {
   runApp(const EpicBid());
@@ -40,20 +43,38 @@ class EpicBid extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      onGenerateRoute: (settings) {
+        if (settings.name == AuctionDetailsPage.id) {
+          final args = settings.arguments;
+          return MaterialPageRoute(
+            builder: (context) => AuctionDetailsPage(),
+            settings: RouteSettings(arguments: args), // ✅ pass args properly
+          );
+        }
+
+        // Add other routes here if needed
+        return null;
+      },
       routes: {
         SplashScreen.id: (context) => const SplashScreen(),
         LoginPage.id: (context) => const LoginPage(),
         RegisterPage.id: (context) => RegisterPage(),
         ForgotPasswordPage.id: (context) => const ForgotPasswordPage(),
         HomePage.id: (context) => HomePage(),
-        StorePage.id: (context) => const StorePage(),
-        AuctionPage.id: (context) => const AuctionPage(),
+        StorePage.id: (context) => BlocProvider(
+              create: (_) => ProductCubit()..getProducts(),
+              child: StorePage(),
+            ),
+        AuctionPage.id: (context) => BlocProvider(
+              create: (_) => ProductCubit()..getProducts(),
+              child: AuctionPage(),
+            ),
         ProfilePage.id: (context) => const ProfilePage(),
-        ProductDetails.id: (context) => const ProductDetails(),
+        ProductDetails.id: (context) => ProductDetails(),
         AdditionalInformationPage.id: (context) =>
             const AdditionalInformationPage(),
         ReviewPage.id: (context) => const ReviewPage(),
-        AuctionDetailsPage.id: (context) => const AuctionDetailsPage(),
+        //AuctionDetailsPage.id: (context) => const AuctionDetailsPage(),
         ChatPage.id: (context) => const ChatPage(),
         CreateAuction.id: (context) => const CreateAuction(),
         CreateDone.id: (context) => const CreateDone(),

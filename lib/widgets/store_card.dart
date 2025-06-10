@@ -1,4 +1,3 @@
-import 'package:epicBid/pages/product_details.dart';
 import 'package:flutter/material.dart';
 
 class StoreCard extends StatelessWidget {
@@ -8,84 +7,77 @@ class StoreCard extends StatelessWidget {
     required this.productName,
     required this.image,
     required this.price,
-    required this.height,
   });
   Color color;
   String image;
   String productName;
   String price;
-  double height;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, ProductDetails.id);
-      },
-      child: Container(
-        width: 194,
-        height: height,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(62),
-        ),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 27,
-                left: 26,
+    return Container(
+      width: 194,
+      height: 200,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(62),
+      ),
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 27,
+              left: 26,
+            ),
+            child: Image.asset(
+              image,
+              width: 143,
+              height: 143,
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(
+              top: 27,
+              left: 150,
+            ),
+            child: ImageIcon(
+              AssetImage(
+                "assets/icons/heart.png",
               ),
-              child: Image.asset(
-                image,
-                width: 143,
-                height: 143,
+              color: Colors.white,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 170,
+              left: 20,
+            ),
+            child: Text(
+              productName,
+              style: const TextStyle(
+                color: Colors.black,
+                fontFamily: 'Inter',
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(
-                top: 27,
-                left: 150,
-              ),
-              child: ImageIcon(
-                AssetImage(
-                  "assets/icons/heart.png",
-                ),
-                color: Colors.white,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 230,
+              left: 70,
+            ),
+            child: Text(
+              price,
+              style: const TextStyle(
+                color: Colors.black,
+                fontFamily: 'Inter',
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 170,
-                left: 40,
-              ),
-              child: Text(
-                productName,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Inter',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 193,
-                left: 60,
-              ),
-              child: Text(
-                price,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Inter',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
