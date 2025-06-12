@@ -14,7 +14,12 @@ class ChatPage extends StatelessWidget {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final productId = args['productId']?.toString() ?? 'default_id';
+    final imagePath = args['image']?.toString() ?? 'assets/default_product.png';
     final TextEditingController messageController = TextEditingController();
+
+    // Get screen dimensions
+    final size = MediaQuery.of(context).size;
+    final double padding = size.width * 0.024; // 10/420 ≈ 0.024
 
     return BlocProvider(
       create: (context) => ChatCubit()..initAuctionRoom(productId),
@@ -23,39 +28,59 @@ class ChatPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           leading: Padding(
-            padding: const EdgeInsets.only(left: 10),
+            padding: EdgeInsets.only(left: padding),
             child: InkWell(
-              onTap: () => Navigator.pushNamed(context, AuctionDetailsPage.id),
-              child: const ImageIcon(AssetImage('assets/icons/arrow.png')),
+              onTap: () {
+                final intProductId = int.tryParse(productId) ?? 0;
+                Navigator.pushNamed(
+                  context,
+                  AuctionDetailsPage.id,
+                  arguments: {
+                    'id': intProductId,
+                    'image': imagePath,
+                  },
+                );
+              },
+              child: ImageIcon(
+                AssetImage('assets/icons/arrow.png'),
+                size: size.width * 0.06, // Scaled icon size
+              ),
             ),
           ),
           centerTitle: true,
-          title: const Column(
+          title: Column(
             children: [
               Text(
                 "Auction Chat",
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'Intel',
-                  fontSize: 22,
+                  fontSize: size.width * 0.052, // 22/420 ≈ 0.052
                   fontWeight: FontWeight.w500,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
               Text(
                 "Online",
                 style: TextStyle(
-                  color: Color(0xff656565),
+                  color: const Color(0xff656565),
                   fontFamily: 'Intel',
-                  fontSize: 14,
+                  fontSize: size.width * 0.033, // 14/420 ≈ 0.033
                   fontWeight: FontWeight.w400,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Image.asset('assets/icons/phone.png'),
+              padding: EdgeInsets.only(right: padding),
+              child: InkWell(
+                child: Image.asset(
+                  'assets/icons/phone.png',
+                  width: size.width * 0.06,
+                ),
+              ),
             ),
           ],
         ),
@@ -76,7 +101,7 @@ class ChatPage extends StatelessWidget {
                 Expanded(
                   child: ListView.builder(
                     reverse: true,
-                    padding: const EdgeInsets.only(bottom: 10),
+                    padding: EdgeInsets.only(bottom: padding),
                     itemCount: chatCubit.messages.length,
                     itemBuilder: (context, index) {
                       final message = chatCubit.messages[index];
@@ -92,8 +117,8 @@ class ChatPage extends StatelessWidget {
           },
         ),
         bottomNavigationBar: Container(
-          width: 430,
-          height: 62,
+          width: size.width, // 430 → size.width
+          height: size.width * 0.148, // 62/420 ≈ 0.148
           color: const Color(0xffCCCCCC),
           child: BlocBuilder<ChatCubit, ChatStates>(
             builder: (context, state) {
@@ -101,28 +126,38 @@ class ChatPage extends StatelessWidget {
               final username = 'current_user'; // Replace with actual username
 
               return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Image.asset('assets/icons/image.png'),
-                  Image.asset('assets/icons/mic.png'),
+                  Image.asset(
+                    'assets/icons/image.png',
+                    width: size.width * 0.06,
+                  ),
+                  Image.asset(
+                    'assets/icons/mic.png',
+                    width: size.width * 0.06,
+                  ),
                   SizedBox(
-                    width: 305,
-                    height: 43,
+                    width: size.width * 0.73, // 305/420 ≈ 0.726
+                    height: size.width * 0.102, // 43/420 ≈ 0.102
                     child: TextField(
                       controller: messageController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
-                        prefixIcon: Image.asset('assets/icons/emoji.png'),
+                        prefixIcon: Image.asset(
+                          'assets/icons/emoji.png',
+                          width: size.width * 0.06,
+                        ),
                         hintText: 'Add your Message Here',
-                        hintStyle: const TextStyle(
-                          color: Color(0xff4C4C4C),
+                        hintStyle: TextStyle(
+                          color: const Color(0xff4C4C4C),
                           fontFamily: 'Intel',
-                          fontSize: 16,
+                          fontSize: size.width * 0.038, // 16/420 ≈ 0.038
                           fontWeight: FontWeight.w400,
                         ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(
+                              size.width * 0.048), // 20/420 ≈ 0.048
                         ),
                       ),
                       onSubmitted: (text) {
@@ -138,7 +173,10 @@ class ChatPage extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    icon: Image.asset('assets/icons/like.png'),
+                    icon: const Icon(
+                      Icons.send,
+                      color: Color(0xff2D5356),
+                    ),
                     onPressed: () {
                       if (messageController.text.trim().isNotEmpty) {
                         chatCubit.sendAuctionMessage(

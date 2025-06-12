@@ -29,183 +29,198 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions
+    final size = MediaQuery.of(context).size;
+    final double horizontalPadding = size.width * 0.05; // 5% of screen width
+    final double topContainerHeight =
+        size.height * 0.45; // 45% of screen height
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: 480,
-              height: 400,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xff2D5356),
-                    Color(0xff738D8F),
-                  ],
-                  begin: Alignment.topLeft, // Gradient start point
-                  end: Alignment.bottomRight, // Gradient end point
-                ),
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: -50,
-                    left: 311,
-                    child: Container(
-                      width: 270,
-                      height: 270,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(400),
-                        color: Colors.white.withOpacity(0.1),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 167,
-                    left: 323,
-                    child: Container(
-                      width: 270,
-                      height: 270,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(400),
-                        color: Colors.white.withOpacity(0.1),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 70,
-                      left: 18,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Welcome My Friend",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Inter',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 210,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, CartPage.id);
-                          },
-                          child: const ImageIcon(
-                            AssetImage("assets/icons/cart.png"),
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      top: 92,
-                      left: 18,
-                    ),
-                    child: Text(
-                      "Sara Nagy",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Inter',
-                        fontSize: 25,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 150,
-                      left: 18,
-                      right: 18,
-                    ),
-                    child: SearchWidget(
-                      textColor: const Color(0xff4C4C4C),
-                      fillColor: Colors.white,
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      top: 240,
-                      left: 18,
-                    ),
-                    child: Text(
-                      "All Categories",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 290,
-                      left: 18,
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: categories.map((category) {
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Colors.grey[200],
-                                  backgroundImage: AssetImage(
-                                    category['icon']!,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(category['name']!,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.white,
-                                    )),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-                width: 469,
-                height: 571,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: double.infinity, // Full width
+                height: topContainerHeight,
                 decoration: const BoxDecoration(
-                  color: Color(0xffF5F5F5),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25), // Use Radius.circular
-                    topRight: Radius.circular(25), // Use Radius.circular
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xff2D5356),
+                      Color(0xff738D8F),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
                 ),
-                child: ListView(
+                child: Stack(
                   children: [
-                    TopCardSlider(),
-                    const Padding(
+                    Positioned(
+                      top: size.height * -0.05,
+                      left: size.width * 0.65,
+                      child: Container(
+                        width: size.width * 0.56,
+                        height: size.width * 0.56,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.83),
+                          color: Colors.white.withOpacity(0.1),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: size.height * 0.19,
+                      left: size.width * 0.68,
+                      child: Container(
+                        width: size.width * 0.56,
+                        height: size.width * 0.56,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.83),
+                          color: Colors.white.withOpacity(0.1),
+                        ),
+                      ),
+                    ),
+                    Padding(
                       padding: EdgeInsets.only(
-                        top: 20,
-                        left: 18,
-                        bottom: 10,
-                        right: 20,
+                        top: size.height * 0.06, // Moved up from 0.08
+                        left: horizontalPadding,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
+                            "Welcome My Friend",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Inter',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: horizontalPadding),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, CartPage.id);
+                              },
+                              child: const ImageIcon(
+                                AssetImage("assets/icons/cart.png"),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: size.height * 0.09, // Moved up from 0.11
+                        left: horizontalPadding,
+                      ),
+                      child: const Text(
+                        "Sara Nagy",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Inter',
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: size.height * 0.16, // Adjusted from 0.18
+                        left: horizontalPadding,
+                        right: horizontalPadding,
+                      ),
+                      child: SearchWidget(
+                        textColor: const Color(0xff4C4C4C),
+                        fillColor: Colors.white,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: size.height * 0.25, // Adjusted from 0.27
+                        left: horizontalPadding,
+                      ),
+                      child: const Text(
+                        "All Categories",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18, // Reduced from 22
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: size.height * 0.31, // Adjusted from 0.33
+                        left: horizontalPadding,
+                      ),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: categories.map((category) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    radius:
+                                        size.width * 0.06, // Reduced from 0.08
+                                    backgroundColor: Colors.grey[200],
+                                    backgroundImage: AssetImage(
+                                      category['icon']!,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    category['name']!,
+                                    style: const TextStyle(
+                                      fontSize: 10, // Reduced from 12
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity, // Full width
+                decoration: const BoxDecoration(
+                  color: Color(0xffF5F5F5),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                        height: size.height *
+                            0.03), // Added space before TopCardSlider
+                    TopCardSlider(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 20,
+                        left: horizontalPadding,
+                        bottom: 10,
+                        right: horizontalPadding,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
                             "Popular Products",
                             style: TextStyle(
                               color: Colors.black,
@@ -214,27 +229,22 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 150,
-                            ),
-                            child: Text(
-                              "View All",
-                              style: TextStyle(
-                                color: Color(0xff4C4C4C),
-                                fontFamily: 'Inter',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w300,
-                              ),
+                          Text(
+                            "View All",
+                            style: TextStyle(
+                              color: const Color(0xff4C4C4C),
+                              fontFamily: 'Inter',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w300,
                             ),
                           ),
                         ],
                       ),
                     ),
                     SingleChildScrollView(
-                      padding: const EdgeInsets.only(
+                      padding: EdgeInsets.only(
                         top: 5,
-                        left: 18,
+                        left: horizontalPadding,
                       ),
                       scrollDirection: Axis.horizontal,
                       child: Row(
@@ -263,16 +273,16 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(
-                        left: 18,
+                        left: horizontalPadding,
                         bottom: 10,
-                        right: 20,
+                        right: horizontalPadding,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Best offers",
                             style: TextStyle(
                               color: Colors.black,
@@ -284,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             "View All",
                             style: TextStyle(
-                              color: Color(0xff4C4C4C),
+                              color: const Color(0xff4C4C4C),
                               fontFamily: 'Inter',
                               fontSize: 18,
                               fontWeight: FontWeight.w300,
@@ -312,17 +322,17 @@ class _HomePageState extends State<HomePage> {
                       color: const Color(0xff0087A8),
                     ),
                     const FlashOfferCard(),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(
                         top: 20,
-                        left: 18,
+                        left: horizontalPadding,
                         bottom: 10,
-                        right: 20,
+                        right: horizontalPadding,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Popular Auctions",
                             style: TextStyle(
                               color: Colors.black,
@@ -334,7 +344,7 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             "View All",
                             style: TextStyle(
-                              color: Color(0xff4C4C4C),
+                              color: const Color(0xff4C4C4C),
                               fontFamily: 'Inter',
                               fontSize: 18,
                               fontWeight: FontWeight.w300,
@@ -344,9 +354,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     SingleChildScrollView(
-                      padding: const EdgeInsets.only(
+                      padding: EdgeInsets.only(
                         top: 5,
-                        left: 18,
+                        left: horizontalPadding,
+                        bottom: 20,
                       ),
                       scrollDirection: Axis.horizontal,
                       child: Row(
@@ -376,8 +387,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ],
-                )),
-          ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

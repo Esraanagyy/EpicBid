@@ -16,13 +16,27 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  //final ProductModel product;
   @override
   Widget build(BuildContext context) {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final int productId = args['id'];
     final String imagePath = args['image'];
+
+    // Get screen dimensions
+    final size = MediaQuery.of(context).size;
+    final double padding = size.width * 0.05;
+    final double appBarHeight = AppBar().preferredSize.height;
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    final double imageHeight = size.width * 0.45;
+    final double desiredCardHeight = size.width * 1.107; // 465/420 ≈ 1.107
+    final double maxCardHeight = (size.height -
+            appBarHeight -
+            statusBarHeight -
+            imageHeight -
+            padding * 2)
+        .clamp(
+            0, desiredCardHeight); // Cap at desired height or available space
 
     return BlocProvider(
       create: (context) => ProductCubit()..getProductDetails(productId),
@@ -70,33 +84,47 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ],
             ),
-            body: Builder(
-              builder: (context) {
-                final state = context.watch<ProductCubit>().state;
+            body: SafeArea(
+              child: Builder(
+                builder: (context) {
+                  final state = context.watch<ProductCubit>().state;
 
-                if (state is GetProductDetailsSuccessState) {
-                  final product = state.product;
-
-                  return Column(
-                    children: [
-                      Image.asset(
-                        imagePath,
-                        width: 450,
-                        height: 423,
-                        fit: BoxFit.cover,
-                      ),
-                      DetailsCard(
-                        product: product,
-                        imagePath: imagePath,
-                      ),
-                    ],
-                  );
-                } else if (state is GetProductDetailsFailState) {
-                  return const Center(child: Text("Failed to load product."));
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
+                  if (state is GetProductDetailsSuccessState) {
+                    final product = state.product;
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: padding * 2),
+                          child: Image.asset(
+                            imagePath,
+                            width: size.width * 3,
+                            height: imageHeight,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: padding * 0.7),
+                          child: ConstrainedBox(
+                            constraints:
+                                BoxConstraints(maxHeight: maxCardHeight),
+                            child: DetailsCard(
+                              product: product,
+                              imagePath: imagePath,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else if (state is GetProductDetailsFailState) {
+                    return const Center(child: Text("Failed to load product."));
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
             ),
           );
         },
@@ -104,11 +132,3 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 }
-/*
-    DetailsCard(
-                        name: product.name ?? '',
-                        description: product.description ?? '',
-                        price: '${product.price ?? 0}',
-                        rate: '${product.totalRatings ?? 0}',
-                      ),
- */

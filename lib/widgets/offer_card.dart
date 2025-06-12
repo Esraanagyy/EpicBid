@@ -12,17 +12,23 @@ class OfferCard extends StatelessWidget {
   String productName;
   String price;
   Color color;
+
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions
+    final size = MediaQuery.of(context).size;
+    final double horizontalPadding = size.width * 0.05; // 5% of screen width
+    final double verticalPadding = size.height * 0.03; // 3% of screen height
+
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 40,
-        left: 18,
-        right: 18,
+      padding: EdgeInsets.only(
+        top: verticalPadding,
+        left: horizontalPadding,
+        right: horizontalPadding,
       ),
       child: Container(
-        width: 404,
-        height: 100,
+        width: size.width * 0.9, // 90% of screen width
+        height: size.height * 0.12, // 12% of screen height
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(32),
@@ -31,17 +37,17 @@ class OfferCard extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             Positioned(
-              top: -50,
+              top: size.height * -0.06, // Scaled offset
               child: Image.asset(
                 image,
-                width: 160,
-                height: 160,
+                width: size.width * 0.35, // Scaled image size
+                height: size.width * 0.35,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                top: 18,
-                left: 155,
+              padding: EdgeInsets.only(
+                top: size.height * 0.02,
+                left: size.width * 0.38, // Scaled text position
               ),
               child: Text(
                 productName,
@@ -54,9 +60,9 @@ class OfferCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                top: 50,
-                left: 170,
+              padding: EdgeInsets.only(
+                top: size.height * 0.06,
+                left: size.width * 0.38,
               ),
               child: Text(
                 price,
@@ -68,16 +74,16 @@ class OfferCard extends StatelessWidget {
                 ),
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(
-                left: 341,
-                top: 34,
+                left: size.width * 0.82, // Scaled icon position
+                top: size.height * 0.04,
               ),
-              child: ImageIcon(
+              child: const ImageIcon(
                 AssetImage("assets/icons/heart.png"),
                 color: Colors.white,
               ),
-            )
+            ),
           ],
         ),
       ),

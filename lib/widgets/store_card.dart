@@ -15,9 +15,15 @@ class StoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions
+    final size = MediaQuery.of(context).size;
+    final double cardWidth = size.width * 0.45; // 45% of screen width
+    final double cardHeight = size.width * 0.6; // Proportional to width
+    final double padding = size.width * 0.06; // 6% of screen width
+
     return Container(
-      width: 194,
-      height: 200,
+      width: cardWidth,
+      height: cardHeight,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(62),
@@ -25,32 +31,30 @@ class StoreCard extends StatelessWidget {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-              top: 27,
-              left: 26,
+            padding: EdgeInsets.only(
+              top: padding,
+              left: padding,
             ),
             child: Image.asset(
               image,
-              width: 143,
-              height: 143,
+              width: size.width * 0.32, // Scaled image size
+              height: size.width * 0.32,
             ),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(
-              top: 27,
-              left: 150,
+              top: padding,
+              left: cardWidth * 0.78, // Scaled icon position
             ),
-            child: ImageIcon(
-              AssetImage(
-                "assets/icons/heart.png",
-              ),
+            child: const ImageIcon(
+              AssetImage("assets/icons/heart.png"),
               color: Colors.white,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              top: 170,
-              left: 20,
+            padding: EdgeInsets.only(
+              top: cardHeight * 0.65, // Positioned within card
+              left: padding,
             ),
             child: Text(
               productName,
@@ -60,12 +64,13 @@ class StoreCard extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
               ),
+              overflow: TextOverflow.ellipsis, // Prevent text overflow
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              top: 230,
-              left: 70,
+            padding: EdgeInsets.only(
+              top: cardHeight * 0.80, // Below productName
+              left: padding,
             ),
             child: Text(
               price,
@@ -75,6 +80,7 @@ class StoreCard extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
+              overflow: TextOverflow.ellipsis, // Prevent text overflow
             ),
           ),
         ],

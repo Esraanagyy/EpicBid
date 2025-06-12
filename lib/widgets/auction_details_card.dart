@@ -1,5 +1,6 @@
 import 'package:epicBid/pages/cart_page.dart';
 import 'package:epicBid/pages/chat_page.dart';
+import 'package:epicBid/pages/offer_page.dart';
 import 'package:epicBid/pages/review_page.dart';
 import 'package:flutter/material.dart';
 
@@ -10,16 +11,24 @@ class AuctionDetailsCard extends StatelessWidget {
     required this.price,
     required this.description,
     required this.rate,
+    required this.imagePath,
+    required this.productId,
   });
   String name;
   String price;
   String description;
   String rate;
+  String imagePath;
+  int productId;
+
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions
+    final size = MediaQuery.of(context).size;
+    final double padding = size.width * 0.043; // 18/420 ≈ 0.043
+
     return Container(
-      width: 400,
-      height: 570,
+      width: size.width * 0.95, // 400/420 ≈ 0.95
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(32),
@@ -57,6 +66,7 @@ class AuctionDetailsCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     fontSize: 24,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   price,
@@ -66,6 +76,7 @@ class AuctionDetailsCard extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     fontSize: 22,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -124,15 +135,15 @@ class AuctionDetailsCard extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               top: 8,
               left: 19,
               right: 19,
             ),
             child: Row(
               children: [
-                Text(
+                const Text(
                   "Color",
                   style: TextStyle(
                     color: Color(0xff4C4C4C),
@@ -141,13 +152,13 @@ class AuctionDetailsCard extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 CircleAvatar(
-                  backgroundColor: Color(0xffD09423),
-                  radius: 25,
+                  backgroundColor: const Color(0xffD09423),
+                  radius: size.width * 0.06, // 25/420 ≈ 0.06
                 ),
-                Spacer(),
-                Text(
+                const Spacer(),
+                const Text(
                   "Location:",
                   style: TextStyle(
                     color: Color(0xff4C4C4C),
@@ -156,7 +167,7 @@ class AuctionDetailsCard extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                Text(
+                const Text(
                   "cairo",
                   style: TextStyle(
                     color: Colors.black,
@@ -164,9 +175,10 @@ class AuctionDetailsCard extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     fontSize: 16,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Spacer(),
-                Text(
+                const Spacer(),
+                const Text(
                   "available:",
                   style: TextStyle(
                     color: Color(0xff4C4C4C),
@@ -174,14 +186,18 @@ class AuctionDetailsCard extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     fontSize: 16,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Text(
-                  "4",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
+                const Flexible(
+                  child: Text(
+                    "4",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -249,8 +265,8 @@ class AuctionDetailsCard extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               top: 8,
               left: 18,
               right: 18,
@@ -258,7 +274,7 @@ class AuctionDetailsCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
@@ -273,13 +289,14 @@ class AuctionDetailsCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Ahmed Ehab",
+                          "Sara Nagy",
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -302,6 +319,7 @@ class AuctionDetailsCard extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -319,21 +337,22 @@ class AuctionDetailsCard extends StatelessWidget {
                   ],
                 ),
                 CircleAvatar(
-                  backgroundImage: AssetImage("assets/images/seller.png"),
-                  radius: 25,
+                  backgroundImage: const AssetImage("assets/images/seller.png"),
+                  backgroundColor: Colors.grey, // Fallback to debug visibility
+                  radius: size.width * 0.06, // 25/420 ≈ 0.06
                 ),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
+            padding: EdgeInsets.only(
               top: 10,
-              left: 18,
-              right: 18,
+              left: padding,
+              right: padding,
             ),
             child: Container(
-              width: 364,
-              height: 28,
+              width: size.width * 0.87, // 364/420 ≈ 0.87
+              height: size.width * 0.067, // 28/420 ≈ 0.067
               decoration: BoxDecoration(
                 color: const Color(0xffCCCCCC),
                 borderRadius: BorderRadius.circular(4),
@@ -354,6 +373,7 @@ class AuctionDetailsCard extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     InkWell(
                       onTap: () {
@@ -371,8 +391,8 @@ class AuctionDetailsCard extends StatelessWidget {
                           arguments: {
                             'productId': productId,
                             'productName': name,
-                            'sellerName':
-                                'Sara Nagy', // From your existing card
+                            'sellerName': 'Sara Nagy',
+                            'image': imagePath,
                           },
                         );
                       },
@@ -380,24 +400,24 @@ class AuctionDetailsCard extends StatelessWidget {
                         AssetImage("assets/icons/chat.png"),
                         color: Colors.black,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
+            padding: EdgeInsets.only(
               top: 18,
-              left: 18,
-              right: 18,
+              left: padding,
+              right: padding,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 140,
-                  height: 45,
+                  width: size.width * 0.33, // 140/420 ≈ 0.33
+                  height: size.width * 0.107, // 45/420 ≈ 0.107
                   decoration: BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadiusDirectional.circular(22),
@@ -405,7 +425,8 @@ class AuctionDetailsCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Image.asset("assets/icons/-.png"),
+                      Image.asset("assets/icons/-.png",
+                          width: size.width * 0.05),
                       const Text(
                         "2",
                         style: TextStyle(
@@ -415,7 +436,8 @@ class AuctionDetailsCard extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      Image.asset("assets/icons/+.png"),
+                      Image.asset("assets/icons/+.png",
+                          width: size.width * 0.05),
                     ],
                   ),
                 ),
@@ -440,15 +462,15 @@ class AuctionDetailsCard extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
+            padding: EdgeInsets.only(
               top: 18,
-              left: 18,
-              right: 18,
+              left: padding,
+              right: padding,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -458,30 +480,47 @@ class AuctionDetailsCard extends StatelessWidget {
                     Navigator.pushNamed(context, CartPage.id);
                   },
                   child: Container(
-                    width: 63,
-                    height: 63,
+                    width: size.width * 0.15, // 63/420 ≈ 0.15
+                    height: size.width * 0.15,
                     decoration: BoxDecoration(
-                        color: const Color(0xffD09423),
-                        borderRadius: BorderRadius.circular(43)),
-                    child: Image.asset('assets/icons/cart2.png'),
+                      color: const Color(0xffD09423),
+                      borderRadius: BorderRadius.circular(43),
+                    ),
+                    child: Image.asset('assets/icons/cart2.png',
+                        width: size.width * 0.08),
                   ),
                 ),
-                Container(
-                  width: 284,
-                  height: 62,
-                  decoration: BoxDecoration(
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      OfferPage.id,
+                      arguments: {
+                        'productId': productId,
+                        'imagePath': imagePath,
+                      },
+                    );
+                  },
+                  child: Container(
+                    width:
+                        size.width * 0.65, // 284/420 ≈ 0.68, adjusted to 0.65
+                    height: size.width * 0.148, // 62/420 ≈ 0.148
+                    decoration: BoxDecoration(
                       color: const Color(0xff2D5356),
-                      borderRadius: BorderRadius.circular(62)),
-                  child: const Padding(
-                    padding: EdgeInsets.only(top: 18),
-                    child: Text(
-                      "Buy Now",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Inter',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
+                      borderRadius: BorderRadius.circular(62),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.only(top: 18),
+                      child: Text(
+                        "place your bid",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Inter',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ),

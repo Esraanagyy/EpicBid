@@ -17,8 +17,10 @@ import 'package:epicBid/pages/language_page.dart';
 import 'package:epicBid/pages/login_page.dart';
 import 'package:epicBid/pages/my_auctions_page.dart';
 import 'package:epicBid/pages/my_products_page.dart';
+import 'package:epicBid/pages/offer_page.dart';
 import 'package:epicBid/pages/onboarding_page.dart';
 import 'package:epicBid/pages/payment_done.dart';
+import 'package:epicBid/pages/place_bid_page.dart';
 import 'package:epicBid/pages/product_details.dart';
 import 'package:epicBid/pages/profile_page.dart';
 import 'package:epicBid/pages/register_page.dart';
@@ -31,6 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'cubits/auction_cubit/auction_cubit.dart';
 import 'cubits/product_cubit/product_cubit.dart';
 
 void main() {
@@ -92,6 +95,11 @@ class EpicBid extends StatelessWidget {
         VerifyCodePage.id: (context) => const VerifyCodePage(),
         ResetPasswordPage.id: (context) => const ResetPasswordPage(),
         ChatBotPage.id: (context) => const ChatBotPage(),
+        PlaceBidPage.id: (context) => BlocProvider(
+              create: (context) => AuctionCubit(),
+              child: const PlaceBidPage(),
+            ),
+        OfferPage.id: (context) => OfferPage(),
       },
       initialRoute: SplashScreen.id,
       builder: EasyLoading.init(

@@ -27,6 +27,10 @@ class _DetailsCardState extends State<DetailsCard> {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions
+    final size = MediaQuery.of(context).size;
+    final double padding = size.width * 0.043; // 18/420 ≈ 0.043
+
     String generateBasketId() {
       return 'basket_${DateTime.now().millisecondsSinceEpoch}';
     }
@@ -38,8 +42,8 @@ class _DetailsCardState extends State<DetailsCard> {
         listener: (context, state) {},
         builder: (context, state) {
           return Container(
-            width: 400,
-            height: 465,
+            width: size.width * 0.95, // 400/420 ≈ 0.95
+            height: size.width * 1.107, // 465/420 ≈ 1.107
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(32),
@@ -63,9 +67,7 @@ class _DetailsCardState extends State<DetailsCard> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 10,
-                  ),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -77,6 +79,7 @@ class _DetailsCardState extends State<DetailsCard> {
                           fontWeight: FontWeight.w600,
                           fontSize: 24,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         '${widget.product.price?.toStringAsFixed(2) ?? '0.00'} LE',
@@ -86,6 +89,7 @@ class _DetailsCardState extends State<DetailsCard> {
                           fontWeight: FontWeight.w500,
                           fontSize: 22,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
@@ -103,10 +107,7 @@ class _DetailsCardState extends State<DetailsCard> {
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(
-                    top: 10,
-                    left: 18,
-                  ),
+                  padding: EdgeInsets.only(top: 10, left: 18),
                   child: Text(
                     "description",
                     style: TextStyle(
@@ -118,10 +119,7 @@ class _DetailsCardState extends State<DetailsCard> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 5,
-                    left: 18,
-                  ),
+                  padding: const EdgeInsets.only(top: 5, left: 18),
                   child: Text(
                     widget.product.description!,
                     style: const TextStyle(
@@ -130,6 +128,8 @@ class _DetailsCardState extends State<DetailsCard> {
                       fontWeight: FontWeight.w400,
                       fontSize: 13,
                     ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   ),
                 ),
                 const Padding(
@@ -145,10 +145,7 @@ class _DetailsCardState extends State<DetailsCard> {
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(
-                    top: 10,
-                    left: 18,
-                  ),
+                  padding: EdgeInsets.only(top: 10, left: 18),
                   child: Text(
                     "Color",
                     style: TextStyle(
@@ -159,32 +156,38 @@ class _DetailsCardState extends State<DetailsCard> {
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(
                     top: 5,
-                    left: 80,
-                    right: 80,
+                    left: size.width * 0.19, // 80/420 ≈ 0.19
+                    right: size.width * 0.19,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Color(0xff947866),
-                        radius: 25,
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.black,
-                        radius: 25,
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Color(0xffD09423),
-                        radius: 25,
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Color(0xff263238),
-                        radius: 25,
-                      ),
-                    ],
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: const Color(0xff947866),
+                          radius: size.width * 0.06, // 25/420 ≈ 0.06
+                        ),
+                        SizedBox(width: size.width * 0.02),
+                        CircleAvatar(
+                          backgroundColor: Colors.black,
+                          radius: size.width * 0.06,
+                        ),
+                        SizedBox(width: size.width * 0.02),
+                        CircleAvatar(
+                          backgroundColor: const Color(0xffD09423),
+                          radius: size.width * 0.06,
+                        ),
+                        SizedBox(width: size.width * 0.02),
+                        CircleAvatar(
+                          backgroundColor: const Color(0xff263238),
+                          radius: size.width * 0.06,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const Padding(
@@ -244,23 +247,24 @@ class _DetailsCardState extends State<DetailsCard> {
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
+                  padding: EdgeInsets.only(
                     top: 8,
-                    left: 18,
-                    right: 18,
+                    left: padding,
+                    right: padding,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        width: 140,
-                        height: 45,
+                        width: size.width * 0.33, // 140/420 ≈ 0.33
+                        height: size.width * 0.107, // 45/420 ≈ 0.107
                         decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadiusDirectional.circular(22),
@@ -274,7 +278,10 @@ class _DetailsCardState extends State<DetailsCard> {
                                   if (quantity > 0) quantity--;
                                 });
                               },
-                              child: Image.asset("assets/icons/-.png"),
+                              child: Image.asset(
+                                "assets/icons/-.png",
+                                width: size.width * 0.05,
+                              ),
                             ),
                             Text(
                               quantity.toString(),
@@ -291,7 +298,10 @@ class _DetailsCardState extends State<DetailsCard> {
                                   quantity++;
                                 });
                               },
-                              child: Image.asset("assets/icons/+.png"),
+                              child: Image.asset(
+                                "assets/icons/+.png",
+                                width: size.width * 0.05,
+                              ),
                             ),
                           ],
                         ),
@@ -319,17 +329,18 @@ class _DetailsCardState extends State<DetailsCard> {
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
+                  padding: EdgeInsets.only(
                     top: 10,
-                    left: 18,
-                    right: 18,
+                    left: padding,
+                    right: padding,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -375,30 +386,40 @@ class _DetailsCardState extends State<DetailsCard> {
                           Navigator.pushNamed(context, CartPage.id);
                         },
                         child: Container(
-                          width: 63,
-                          height: 63,
+                          width: size.width * 0.15, // 63/420 ≈ 0.15
+                          height: size.width * 0.15,
                           decoration: BoxDecoration(
-                              color: const Color(0xffD09423),
-                              borderRadius: BorderRadius.circular(43)),
-                          child: Image.asset('assets/icons/cart2.png'),
+                            color: const Color(0xffD09423),
+                            borderRadius: BorderRadius.circular(43),
+                          ),
+                          child: Image.asset(
+                            'assets/icons/cart2.png',
+                            width: size.width * 0.08,
+                          ),
                         ),
                       ),
                       Container(
-                        width: 284,
-                        height: 62,
+                        width: size.width *
+                            0.65, // 284/420 ≈ 0.68, adjusted to 0.65
+                        height: size.width * 0.148, // 62/420 ≈ 0.148
                         decoration: BoxDecoration(
-                            color: const Color(0xff2D5356),
-                            borderRadius: BorderRadius.circular(62)),
+                          color: const Color(0xff2D5356),
+                          borderRadius: BorderRadius.circular(62),
+                        ),
                         child: const Padding(
                           padding: EdgeInsets.only(top: 18),
-                          child: Text(
-                            "Buy Now",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Inter',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text(
+                              "Buy Now",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CheckWidget extends StatelessWidget {
@@ -7,7 +6,7 @@ class CheckWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20,left: 40,right: 40),
+      padding: const EdgeInsets.only(top: 20, left: 40, right: 40),
       child: Container(
         width: 360,
         height: 192,
@@ -37,33 +36,33 @@ class CheckWidget extends StatelessWidget {
             SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-             children: [
-               Text(
-                 'Sub Total',
-                 style: TextStyle(
-                   color: Colors.white,
-                   fontFamily: 'Inter',
-                   fontSize: 16,
-                   fontWeight: FontWeight.w400,
-                 ),
-               ),
-               Text(
-                 '5200 LE',
-                 style: TextStyle(
-                   color: Colors.white,
-                   fontFamily: 'Inter',
-                   fontSize: 16,
-                   fontWeight: FontWeight.w500,
-                 ),
-               ),
-             ],
+              children: [
+                Text(
+                  'Sub Total',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Inter',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Text(
+                  '2220 LE',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Inter',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  'Shipping Free',
+                  'Shipping Fee',
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Inter',
@@ -96,7 +95,7 @@ class CheckWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '5200 LE',
+                  '2220 LE',
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Inter',
