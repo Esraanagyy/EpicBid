@@ -74,7 +74,7 @@ class CartPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(
               top: size.width * 0.048, // 20/420 ≈ 0.048
-              left: size.width * 0.405, // 170/420 ≈ 0.405
+              left: size.width * 0.370,
             ),
             child: Row(
               children: [
@@ -96,7 +96,12 @@ class CartPage extends StatelessWidget {
               ],
             ),
           ),
-          const CheckWidget(),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: size.width * 0.048,
+            ),
+            child: const CheckWidget(),
+          ),
         ],
       ),
       bottomNavigationBar: Padding(

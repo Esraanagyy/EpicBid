@@ -85,8 +85,9 @@ class _CartCardState extends State<CartCard> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: size.width * 0.719, // (0.95 - 0.188 - 0.043)
-                top: size.width * 0.081, // 34/420 ≈ 0.081
+                left: size.width * 0.710, // (0.95 - 0.188 - 0.043)
+                top: size.width * 0.081,
+                right: size.width * 0.02,
               ),
               child: Container(
                 width: size.width * 0.188, // 79/420 ≈ 0.188

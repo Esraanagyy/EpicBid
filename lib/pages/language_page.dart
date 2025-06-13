@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class LanguagePage extends StatelessWidget {
   const LanguagePage({super.key});
-  static String id='lang';
+  static String id = 'lang';
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class LanguagePage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         leading: InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.pushNamed(context, ProfilePage.id);
           },
           child: Image.asset('assets/icons/arrow.png'),
@@ -31,9 +31,45 @@ class LanguagePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 30,),
+          const SizedBox(
+            height: 30,
+          ),
           Padding(
-            padding: const EdgeInsets.only(left: 18,),
+            padding: const EdgeInsets.only(
+              left: 18,
+              right: 18,
+            ),
+            child: Container(
+              width: 404,
+              height: 62,
+              decoration: BoxDecoration(
+                color: const Color(0xffCCCCCC),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.only(
+                  left: 18,
+                ),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'English',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 18, right: 18),
             child: Container(
               width: 404,
               height: 62,
@@ -46,41 +82,14 @@ class LanguagePage extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                      'English',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Inter',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                  ),
-                ),
-              ) ,
-            ),
-          ),
-          const SizedBox(height: 10,),
-          Padding(
-            padding: const EdgeInsets.only(left: 18),
-            child: Container(
-              width: 404,
-              height: 62,
-              decoration: BoxDecoration(
-                color: const Color(0xffCCCCCC),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child:const Padding(
-                padding: EdgeInsets.only(left: 18),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                      'Arabic',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Inter',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    'Arabic',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
                     ),
+                  ),
                 ),
               ),
             ),
