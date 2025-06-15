@@ -4,6 +4,8 @@ import 'package:epicBid/pages/offer_page.dart';
 import 'package:epicBid/pages/review_page.dart';
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
+
 class AuctionDetailsCard extends StatelessWidget {
   AuctionDetailsCard({
     super.key,
@@ -23,7 +25,7 @@ class AuctionDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
+    var lang = AppLocalizations.of(context);
     final size = MediaQuery.of(context).size;
     final double padding = size.width * 0.043; // 18/420 ≈ 0.043
 
@@ -93,14 +95,14 @@ class AuctionDetailsCard extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               top: 10,
               left: 18,
             ),
             child: Text(
-              "Description",
-              style: TextStyle(
+              lang?.description ?? '',
+              style: const TextStyle(
                 color: Colors.black,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w400,
@@ -143,9 +145,9 @@ class AuctionDetailsCard extends StatelessWidget {
             ),
             child: Row(
               children: [
-                const Text(
-                  "Color",
-                  style: TextStyle(
+                Text(
+                  lang?.color ?? '',
+                  style: const TextStyle(
                     color: Color(0xff4C4C4C),
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
@@ -158,9 +160,9 @@ class AuctionDetailsCard extends StatelessWidget {
                   radius: size.width * 0.06, // 25/420 ≈ 0.06
                 ),
                 const Spacer(),
-                const Text(
-                  "Location:",
-                  style: TextStyle(
+                Text(
+                  lang?.location ?? '',
+                  style: const TextStyle(
                     color: Color(0xff4C4C4C),
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
@@ -168,7 +170,7 @@ class AuctionDetailsCard extends StatelessWidget {
                   ),
                 ),
                 const Text(
-                  "cairo",
+                  'cairo',
                   style: TextStyle(
                     color: Colors.black,
                     fontFamily: 'Inter',
@@ -178,9 +180,9 @@ class AuctionDetailsCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const Spacer(),
-                const Text(
-                  "available:",
-                  style: TextStyle(
+                Text(
+                  lang?.available ?? '',
+                  style: const TextStyle(
                     color: Color(0xff4C4C4C),
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
@@ -219,9 +221,9 @@ class AuctionDetailsCard extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8, left: 19),
             child: Row(
               children: [
-                const Text(
-                  "Seller Rate",
-                  style: TextStyle(
+                Text(
+                  lang?.sellerRate ?? '',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
@@ -274,14 +276,14 @@ class AuctionDetailsCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
                         Text(
-                          "Seller Name: ",
-                          style: TextStyle(
+                          lang?.sellerName ?? '',
+                          style: const TextStyle(
                             color: Color(0xff4C4C4C),
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -289,8 +291,8 @@ class AuctionDetailsCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Sara Nagy",
-                          style: TextStyle(
+                          lang?.saraNagy ?? '',
+                          style: const TextStyle(
                             color: Colors.black,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -303,15 +305,15 @@ class AuctionDetailsCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "Pno: ",
-                          style: TextStyle(
+                          lang?.pno ?? '',
+                          style: const TextStyle(
                             color: Color(0xff4C4C4C),
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
                           ),
                         ),
-                        Text(
+                        const Text(
                           "01118935045",
                           style: TextStyle(
                             color: Colors.black,
@@ -324,8 +326,8 @@ class AuctionDetailsCard extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      "Report",
-                      style: TextStyle(
+                      lang?.report ?? '',
+                      style: const TextStyle(
                         color: Color(0xff2D5356),
                         decoration: TextDecoration.underline,
                         decorationColor: Color(0xff2D5356),
@@ -441,18 +443,18 @@ class AuctionDetailsCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Row(
+                Row(
                   children: [
                     Text(
-                      "Total: ",
-                      style: TextStyle(
+                      lang?.total ?? '',
+                      style: const TextStyle(
                         color: Colors.black,
                         fontFamily: 'Inter',
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    Text(
+                    const Text(
                       "3600",
                       style: TextStyle(
                         color: Colors.black,
@@ -509,12 +511,12 @@ class AuctionDetailsCard extends StatelessWidget {
                       color: const Color(0xff2D5356),
                       borderRadius: BorderRadius.circular(62),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(top: 18),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 18),
                       child: Text(
-                        "place your bid",
+                        lang?.placeYourBid ?? '',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'Inter',
                           fontSize: 16,

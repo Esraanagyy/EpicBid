@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubits/product_cubit/product_cubit.dart';
 import '../cubits/product_cubit/product_states.dart';
+import '../l10n/app_localizations.dart';
 import '../widgets/details_card.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -23,7 +24,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     final int productId = args['id'];
     final String imagePath = args['image'];
 
-    // Get screen dimensions
+    var lang = AppLocalizations.of(context);
     final size = MediaQuery.of(context).size;
     final double padding = size.width * 0.05;
     final double appBarHeight = AppBar().preferredSize.height;
@@ -55,11 +56,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                   AssetImage("assets/icons/arrow.png"),
                 ),
               ),
-              title: const Padding(
-                padding: EdgeInsets.only(top: 8),
+              title: Padding(
+                padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  "Product Details",
-                  style: TextStyle(
+                  lang?.productDetails ?? '',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
+
 class SearchWidget extends StatelessWidget {
   SearchWidget({
     super.key,
@@ -11,6 +13,7 @@ class SearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return TextFormField(
       onChanged: (input) {},
       style: TextStyle(
@@ -25,7 +28,7 @@ class SearchWidget extends StatelessWidget {
           const AssetImage("assets/icons/search.png"),
           color: textColor,
         ),
-        hintText: "  Search In Store",
+        hintText: lang?.searchInStore,
         hintStyle: TextStyle(
           color: textColor,
           fontFamily: 'Inter',

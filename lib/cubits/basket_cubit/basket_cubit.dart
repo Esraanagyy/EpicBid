@@ -1,64 +1,32 @@
-import 'dart:convert';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:bloc/bloc.dart';
-import 'package:epicBid/cubits/basket_cubit/basket_states.dart';
-import 'package:epicBid/models/shipping_address_model.dart';
-import 'package:http/http.dart' as http;
+import 'cart_storage.dart';
 
-import '../../models/basket_items_model.dart';
+part 'basket_states.dart';
 
 class BasketCubit extends Cubit<BasketStates> {
-  BasketCubit() : super(BasketInitialStates());
+  BasketCubit()
+      : super(BasketInitial()); // Ensure initial state is BasketInitial
 
-  //create basket
-  void createBasket({
-    required String basketId,
-    required List<BasketItemModel> items,
-  }) async {
+  void addToCart({
+    required int productId,
+    required String productName,
+    required double price,
+    required String imagePath,
+    required int quantity,
+  }) {
+    emit(BasketLoading());
     try {
-      http.Response response = await http.post(
-        Uri.parse('http://ebic-bid11.runasp.net/api/basket'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'id': basketId,
-          'items': items,
-        }),
+      CartStorage.addToCart(
+        productId: productId,
+        productName: productName,
+        price: price,
+        imagePath: imagePath,
+        quantity: quantity,
       );
-
-      if (response.statusCode == 200) {
-        emit(CreateBasketSuccessState());
-      } else {
-        emit(CreateBasketFailedState());
-      }
+      emit(BasketSuccess('Product added to cart successfully!'));
     } catch (e) {
-      print('Error creating basket: $e');
-      emit(CreateBasketFailedState());
-    }
-  }
-
-  //create order
-  void createOrder(
-      {required String basketId,
-      required int DeliverMethodId,
-      required List<ShippingAddressModel> address}) async {
-    try {
-      http.Response response = await http.post(
-        Uri.parse('http://ebic-bid11.runasp.net/api/Orders/CreateOrder'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'basketId': basketId,
-          'DeliverMethodId': DeliverMethodId,
-          'shippingAddress': address,
-        }),
-      );
-      if (response.statusCode == 200) {
-        emit(CreateOrderSuccessStates());
-      } else {
-        emit(CreateOrderFailedStates());
-      }
-    } catch (e) {
-      print('Error creating basket: $e');
-      emit(CreateOrderFailedStates());
+      emit(BasketError('Error adding to cart: $e'));
     }
   }
 }

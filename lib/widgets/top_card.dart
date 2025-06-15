@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
+
 class TopCardSlider extends StatefulWidget {
   TopCardSlider({super.key});
 
@@ -58,6 +60,7 @@ class _TopCardSliderState extends State<TopCardSlider> {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -113,6 +116,7 @@ class TopCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
@@ -155,33 +159,33 @@ class TopCard extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 63, left: 40),
+            Padding(
+              padding: const EdgeInsets.only(top: 63, left: 40),
               child: Text(
-                "Top",
-                style: TextStyle(
+                lang?.top ?? '',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.w300,
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 89, left: 40),
+            Padding(
+              padding: const EdgeInsets.only(top: 89, left: 40),
               child: Text(
-                "Rated",
-                style: TextStyle(
+                lang?.related ?? '',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 115, left: 40),
+            Padding(
+              padding: const EdgeInsets.only(top: 115, left: 40),
               child: Text(
-                "This Week",
-                style: TextStyle(
+                lang?.thisWeek ?? '',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.w300,

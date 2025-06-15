@@ -8,6 +8,8 @@ import 'package:epicBid/widgets/search_widget.dart';
 import 'package:epicBid/widgets/top_card.dart';
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({super.key});
   static String id = 'home';
@@ -29,7 +31,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
+    var lang = AppLocalizations.of(context);
     final size = MediaQuery.of(context).size;
     final double horizontalPadding = size.width * 0.05; // 5% of screen width
     final double topContainerHeight =
@@ -91,9 +93,9 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Welcome My Friend",
-                            style: TextStyle(
+                          Text(
+                            lang?.welcomeMyFriend ?? '',
+                            style: const TextStyle(
                               color: Colors.white,
                               fontFamily: 'Inter',
                               fontSize: 18,
@@ -120,9 +122,9 @@ class _HomePageState extends State<HomePage> {
                         top: size.height * 0.09, // Moved up from 0.11
                         left: horizontalPadding,
                       ),
-                      child: const Text(
-                        "Sara Nagy",
-                        style: TextStyle(
+                      child: Text(
+                        lang?.saraNagy ?? '',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'Inter',
                           fontSize: 25,
@@ -146,9 +148,9 @@ class _HomePageState extends State<HomePage> {
                         top: size.height * 0.25, // Adjusted from 0.27
                         left: horizontalPadding,
                       ),
-                      child: const Text(
-                        "All Categories",
-                        style: TextStyle(
+                      child: Text(
+                        lang?.allCategories ?? '',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18, // Reduced from 22
                           fontWeight: FontWeight.w400,
@@ -220,9 +222,9 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Popular Products",
-                            style: TextStyle(
+                          Text(
+                            lang?.popularProducts ?? '',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontFamily: 'Inter',
                               fontSize: 22,
@@ -230,9 +232,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            "View All",
-                            style: TextStyle(
-                              color: const Color(0xff4C4C4C),
+                            lang?.viewAll ?? '',
+                            style: const TextStyle(
+                              color: Color(0xff4C4C4C),
                               fontFamily: 'Inter',
                               fontSize: 18,
                               fontWeight: FontWeight.w300,
@@ -282,9 +284,9 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Best offers",
-                            style: TextStyle(
+                          Text(
+                            lang?.bestOffers ?? '',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontFamily: 'Inter',
                               fontSize: 22,
@@ -292,9 +294,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            "View All",
-                            style: TextStyle(
-                              color: const Color(0xff4C4C4C),
+                            lang?.viewAll ?? '',
+                            style: const TextStyle(
+                              color: Color(0xff4C4C4C),
                               fontFamily: 'Inter',
                               fontSize: 18,
                               fontWeight: FontWeight.w300,
@@ -332,9 +334,9 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Popular Auctions",
-                            style: TextStyle(
+                          Text(
+                            lang?.popularAuctions ?? '',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontFamily: 'Inter',
                               fontSize: 22,
@@ -342,9 +344,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            "View All",
-                            style: TextStyle(
-                              color: const Color(0xff4C4C4C),
+                            lang?.viewAll ?? '',
+                            style: const TextStyle(
+                              color: Color(0xff4C4C4C),
                               fontFamily: 'Inter',
                               fontSize: 18,
                               fontWeight: FontWeight.w300,

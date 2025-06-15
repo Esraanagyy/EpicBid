@@ -4,6 +4,7 @@ import 'package:epicBid/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../l10n/app_localizations.dart';
 import '../widgets/chat_bubble.dart';
 
 class ChatBotPage extends StatelessWidget {
@@ -12,6 +13,7 @@ class ChatBotPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -24,11 +26,11 @@ class ChatBotPage extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: const Column(
+        title: Column(
           children: [
             Text(
-              "Chatbot",
-              style: TextStyle(
+              lang?.chatbot ?? '',
+              style: const TextStyle(
                 color: Colors.black,
                 fontFamily: 'Intel',
                 fontSize: 22,
@@ -36,8 +38,8 @@ class ChatBotPage extends StatelessWidget {
               ),
             ),
             Text(
-              "Online",
-              style: TextStyle(
+              lang?.online ?? '',
+              style: const TextStyle(
                 color: Color(0xff656565),
                 fontFamily: 'Intel',
                 fontSize: 14,
@@ -131,6 +133,7 @@ class _ChatBotBodyState extends State<_ChatBotBody> {
   }
 
   Widget _buildInputArea(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       color: const Color(0xffCCCCCC),
@@ -166,7 +169,7 @@ class _ChatBotBodyState extends State<_ChatBotBody> {
                     // Add emoji picker
                   },
                 ),
-                hintText: 'Type your message...',
+                hintText: lang?.typeYourMessage,
                 hintStyle: const TextStyle(
                   color: Color(0xff4C4C4C),
                   fontFamily: 'Intel',

@@ -1,3 +1,4 @@
+import 'package:epicBid/cubits/basket_cubit/cart_storage.dart';
 import 'package:flutter/material.dart';
 
 class CartCard extends StatefulWidget {
@@ -18,13 +19,43 @@ class CartCard extends StatefulWidget {
 }
 
 class _CartCardState extends State<CartCard> {
-  late int quantity = 0;
+  int quantity = 0;
+  double? basePrice;
+
+  @override
+  void initState() {
+    super.initState();
+    try {
+      final cartItem = CartStorage.getCartItems().firstWhere(
+        (item) => item['productName'] == widget.productName,
+        orElse: () => {
+          'quantity': 0,
+          'price': double.tryParse(widget.price.replaceAll(' LE', '')) ?? 0.0
+        },
+      );
+      quantity = cartItem['quantity'] ?? 0;
+      basePrice = (cartItem['price'] as double?) ??
+          double.tryParse(widget.price.replaceAll(' LE', '')) ??
+          0.0;
+      print(
+          'Init - ProductName: ${widget.productName}, Quantity: $quantity, BasePrice: $basePrice, CartItems: ${CartStorage.getCartItems()}');
+    } catch (e) {
+      print('Initialization error: $e'); // Debug log
+      quantity = 0;
+      basePrice = double.tryParse(widget.price.replaceAll(' LE', '')) ?? 0.0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
     final size = MediaQuery.of(context).size;
     final double padding = size.width * 0.043; // 18/420 ≈ 0.043
+    final double totalPrice = (basePrice ?? 0.0) * quantity;
+
+    if (basePrice == null) {
+      return const Center(
+          child: CircularProgressIndicator()); // Temporary fallback
+    }
 
     return Padding(
       padding: EdgeInsets.only(
@@ -73,7 +104,7 @@ class _CartCardState extends State<CartCard> {
                 left: size.width * 0.405, // 170/420 ≈ 0.405
               ),
               child: Text(
-                widget.price,
+                '$totalPrice LE',
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'Inter',
@@ -104,6 +135,14 @@ class _CartCardState extends State<CartCard> {
                       onTap: () {
                         setState(() {
                           quantity++;
+                          final productId =
+                              CartStorage.getCartItems().firstWhere(
+                            (item) => item['productName'] == widget.productName,
+                            orElse: () => {'productId': -1},
+                          )['productId'];
+                          if (productId != -1) {
+                            CartStorage.updateQuantity(productId, quantity);
+                          }
                         });
                       },
                       child: Text(
@@ -128,7 +167,18 @@ class _CartCardState extends State<CartCard> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          if (quantity > 0) quantity--;
+                          if (quantity > 0) {
+                            quantity--;
+                            final productId =
+                                CartStorage.getCartItems().firstWhere(
+                              (item) =>
+                                  item['productName'] == widget.productName,
+                              orElse: () => {'productId': -1},
+                            )['productId'];
+                            if (productId != -1) {
+                              CartStorage.updateQuantity(productId, quantity);
+                            }
+                          }
                         });
                       },
                       child: Text(
@@ -144,7 +194,42 @@ class _CartCardState extends State<CartCard> {
                   ],
                 ),
               ),
-            )
+            ),
+            Positioned(
+              top:
+                  -size.width * 0.071, // Adjusted to place icon above the image
+              right: size.width * 0.048, // 20/420 ≈ 0.048
+              child: InkWell(
+                onTap: () {
+                  final cartItems = CartStorage.getCartItems();
+                  print('Before delete - CartItems: $cartItems');
+                  final cartItem = cartItems.firstWhere(
+                    (item) => item['productName'] == widget.productName,
+                    orElse: () =>
+                        {'productId': -1, 'productName': widget.productName},
+                  );
+                  if (cartItem['productId'] != -1) {
+                    print('Removing item with ID: ${cartItem['productId']}');
+                    CartStorage.removeFromCart(cartItem['productId']);
+                    print(
+                        'After delete - CartItems: ${CartStorage.getCartItems()}');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Item removed from cart')),
+                    );
+                  } else {
+                    print('Item not found - CartItems: $cartItems');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Item not found in cart')),
+                    );
+                  }
+                },
+                child: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                  size: 30,
+                ),
+              ),
+            ),
           ],
         ),
       ),

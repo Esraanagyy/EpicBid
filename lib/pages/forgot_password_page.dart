@@ -6,6 +6,8 @@ import 'package:epicBid/services/snack_bar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../l10n/app_localizations.dart';
+
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
   static String id = 'password';
@@ -20,7 +22,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
+    var lang = AppLocalizations.of(context);
     final size = MediaQuery.of(context).size;
     final double topPadding =
         size.height * 0.08; // Increased for space above image
@@ -59,20 +61,20 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               color: Color(0xff2D5356),
                               size: 100,
                             ),
-                            const Text(
-                              "Forgot \n Password",
+                            Text(
+                              lang?.forgetPasswordPage ?? '',
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xff2D5356),
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w600,
                                 fontSize: 43,
                               ),
                             ),
-                            const Text(
-                              "No Worries , We Will Send You\nreset instructions",
+                            Text(
+                              lang?.noWorries ?? '',
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xff2D5356),
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w300,
@@ -113,9 +115,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                             left: horizontalPadding,
                                             top: 40,
                                           ),
-                                          child: const Text(
-                                            "Email",
-                                            style: TextStyle(
+                                          child: Text(
+                                            lang?.email ?? "",
+                                            style: const TextStyle(
                                               color: Colors.white,
                                               fontFamily: 'Inter',
                                               fontSize: 24,
@@ -154,7 +156,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                                     "assets/icons/email.png"),
                                                 color: Colors.white,
                                               ),
-                                              hintText: "Email Address",
+                                              hintText:
+                                                  lang?.emailAddress ?? '',
                                               hintStyle: const TextStyle(
                                                 color: Colors.white,
                                                 fontFamily: 'Inter',
@@ -212,9 +215,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                                 );
                                               }
                                             },
-                                            child: const Text(
-                                              "Send Code",
-                                              style: TextStyle(
+                                            child: Text(
+                                              lang?.sendCode ?? '',
+                                              style: const TextStyle(
                                                 color: Color(0xff2D5356),
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w300,
@@ -230,10 +233,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                               Navigator.pushNamed(
                                                   context, LoginPage.id);
                                             },
-                                            child: const Text(
-                                              "Back to Login",
+                                            child: Text(
+                                              lang?.backToLogin ?? '',
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontFamily: 'Inter',
                                                 fontSize: 16,

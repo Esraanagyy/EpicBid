@@ -4,6 +4,7 @@ import 'package:epicBid/cubits/auth_cubit/auth_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../l10n/app_localizations.dart';
 import '../services/snack_bar_service.dart';
 import 'home_page.dart';
 import 'login_page.dart';
@@ -26,6 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return BlocProvider(
       create: (context) => AuthCubit(),
       child: BlocConsumer<AuthCubit, AuthStates>(
@@ -60,14 +62,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           bottomLeft: Radius.circular(50),
                         ),
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 50, left: 36),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 50, left: 36),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Now!",
-                              style: TextStyle(
+                              lang?.now ?? '',
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w300,
@@ -75,8 +77,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                             Text(
-                              "Create \n Your \n Account",
-                              style: TextStyle(
+                              lang?.createYourAccount ?? '',
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w500,
@@ -97,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           children: [
                             _buildTextField(
                               controller: nameController,
-                              hint: "Full Name",
+                              hint: lang?.fullName ?? '',
                               iconPath: "assets/icons/user.png",
                               validator: (val) => val!.isEmpty
                                   ? "Please enter your name"
@@ -105,7 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             _buildTextField(
                               controller: emailController,
-                              hint: "Email Address",
+                              hint: lang?.emailAddress ?? '',
                               iconPath: "assets/icons/email.png",
                               validator: (val) {
                                 if (val == null || val.isEmpty)
@@ -119,7 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             _buildTextField(
                               controller: passwordController,
-                              hint: "Password",
+                              hint: lang?.password ?? '',
                               iconPath: "assets/icons/password.png",
                               isPassword: true,
                               obscureText: isObscured,
@@ -134,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             _buildTextField(
                               controller: phoneController,
-                              hint: "Phone",
+                              hint: lang?.phone ?? '',
                               iconData: Icons.phone,
                               validator: (val) {
                                 if (val == null || val.isEmpty) {
@@ -147,13 +149,14 @@ class _RegisterPageState extends State<RegisterPage> {
                               },
                             ),
 
-                            const Row(
+                            Row(
                               children: [
-                                Icon(Icons.check_box_outline_blank, size: 15),
-                                SizedBox(width: 5),
+                                const Icon(Icons.check_box_outline_blank,
+                                    size: 15),
+                                const SizedBox(width: 5),
                                 Text(
-                                  "I agree to the",
-                                  style: TextStyle(
+                                  lang?.iAgreeToTheTerms ?? '',
+                                  style: const TextStyle(
                                     color: Color(0xff468286),
                                     fontFamily: 'Inter',
                                     fontSize: 15,
@@ -161,8 +164,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                 ),
                                 Text(
-                                  " Terms & conditions",
-                                  style: TextStyle(
+                                  lang?.termsAndConditions ?? '',
+                                  style: const TextStyle(
                                     color: Color(0xff2D5356),
                                     fontFamily: 'Inter',
                                     fontSize: 15,
@@ -204,10 +207,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ),
                                   ],
                                 ),
-                                child: const Center(
+                                child: Center(
                                   child: Text(
-                                    "Sign Up",
-                                    style: TextStyle(
+                                    lang?.signUp ?? '',
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Inter',
                                       fontSize: 16,
@@ -221,9 +224,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(
-                                  "Have an account?",
-                                  style: TextStyle(
+                                Text(
+                                  lang?.haveAnAccount ?? '',
+                                  style: const TextStyle(
                                     color: Color(0xff468286),
                                     fontFamily: 'Inter',
                                     fontSize: 15,
@@ -233,9 +236,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 InkWell(
                                   onTap: () => Navigator.pushNamed(
                                       context, LoginPage.id),
-                                  child: const Text(
-                                    "  Sign In",
-                                    style: TextStyle(
+                                  child: Text(
+                                    lang?.signIn ?? '',
+                                    style: const TextStyle(
                                       color: Color(0xff2D5356),
                                       fontFamily: 'Inter',
                                       fontSize: 15,

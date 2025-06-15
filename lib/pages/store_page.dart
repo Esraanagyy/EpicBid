@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubits/product_cubit/product_states.dart';
+import '../l10n/app_localizations.dart';
 import '../widgets/store_card.dart';
 
 class StorePage extends StatelessWidget {
@@ -24,6 +25,7 @@ class StorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return BlocProvider(
       create: (context) => ProductCubit()..getProducts(),
       child: BlocConsumer<ProductCubit, ProductStates>(
@@ -42,9 +44,9 @@ class StorePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "EpicStore",
-                        style: TextStyle(
+                      Text(
+                        lang?.epicStore ?? '',
+                        style: const TextStyle(
                           color: Colors.black,
                           fontFamily: 'Inter',
                           fontSize: 26,
@@ -88,7 +90,7 @@ class StorePage extends StatelessWidget {
                           AssetImage("assets/icons/search.png"),
                           color: Colors.white,
                         ),
-                        hintText: "  Search In Store",
+                        hintText: lang?.searchInStore,
                         hintStyle: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'Inter',
@@ -104,8 +106,8 @@ class StorePage extends StatelessWidget {
                         ),
                       ),
                     )),
-                const Padding(
-                  padding: EdgeInsets.only(
+                Padding(
+                  padding: const EdgeInsets.only(
                     top: 20,
                     left: 5,
                   ),
@@ -113,8 +115,8 @@ class StorePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        "All",
-                        style: TextStyle(
+                        lang?.all ?? '',
+                        style: const TextStyle(
                           color: Colors.black,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w500,
@@ -122,8 +124,8 @@ class StorePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "  Chairs",
-                        style: TextStyle(
+                        lang?.chairs ?? '',
+                        style: const TextStyle(
                           color: Color(0xff4C4C4C),
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -131,8 +133,8 @@ class StorePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "  Tables",
-                        style: TextStyle(
+                        lang?.tables ?? '',
+                        style: const TextStyle(
                           color: Color(0xff4C4C4C),
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -140,8 +142,8 @@ class StorePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "  Lamps",
-                        style: TextStyle(
+                        lang?.lamps ?? '',
+                        style: const TextStyle(
                           color: Color(0xff4C4C4C),
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -149,8 +151,8 @@ class StorePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "  Pillows",
-                        style: TextStyle(
+                        lang?.pillows ?? '',
+                        style: const TextStyle(
                           color: Color(0xff4C4C4C),
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,

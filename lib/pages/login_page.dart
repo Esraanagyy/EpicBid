@@ -5,6 +5,7 @@ import 'package:epicBid/services/snack_bar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../l10n/app_localizations.dart';
 import 'forgot_password_page.dart';
 import 'home_page.dart';
 
@@ -24,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return BlocProvider(
       create: (context) => AuthCubit(),
       child: BlocConsumer<AuthCubit, AuthStates>(
@@ -66,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                                       width: 220),
                                   const SizedBox(height: 12),
                                   Text(
-                                    "EpicBid",
+                                    lang?.epicBid ?? '',
                                     style: TextStyle(
                                       shadows: [
                                         Shadow(
@@ -82,9 +84,9 @@ class _LoginPageState extends State<LoginPage> {
                                       fontSize: 48,
                                     ),
                                   ),
-                                  const Text(
-                                    "E-commerce & Auction",
-                                    style: TextStyle(
+                                  Text(
+                                    lang?.eCommerceAndAuction ?? '',
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w300,
@@ -121,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                                                   "assets/icons/user.png"),
                                               color: Colors.white,
                                             ),
-                                            hintText: "Email or phone",
+                                            hintText: lang?.email ?? '',
                                             hintStyle: const TextStyle(
                                               color: Colors.white,
                                               fontFamily: 'Inter',
@@ -178,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 color: Colors.white,
                                               ),
                                             ),
-                                            hintText: "Password",
+                                            hintText: lang?.password,
                                             hintStyle: const TextStyle(
                                               color: Colors.white,
                                               fontFamily: 'Inter',
@@ -227,9 +229,9 @@ class _LoginPageState extends State<LoginPage> {
                                       Navigator.pushNamed(
                                           context, ForgotPasswordPage.id);
                                     },
-                                    child: const Text(
-                                      "Forgot Password?",
-                                      style: TextStyle(
+                                    child: Text(
+                                      lang?.forgotPassword ?? '',
+                                      style: const TextStyle(
                                         color: Color(0xff2D5356),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
@@ -254,9 +256,9 @@ class _LoginPageState extends State<LoginPage> {
                                         );
                                       }
                                     },
-                                    child: const Text(
-                                      "Login",
-                                      style: TextStyle(
+                                    child: Text(
+                                      lang?.login ?? '',
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w300,
@@ -265,9 +267,9 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                   const SizedBox(height: 12),
-                                  const Text(
-                                    "or",
-                                    style: TextStyle(
+                                  Text(
+                                    lang?.or ?? '',
+                                    style: const TextStyle(
                                       color: Color(0xff2D5356),
                                       fontFamily: 'Inter',
                                       fontSize: 15,
@@ -285,9 +287,9 @@ class _LoginPageState extends State<LoginPage> {
                                       Navigator.pushNamed(
                                           context, RegisterPage.id);
                                     },
-                                    child: const Text(
-                                      "Create an account",
-                                      style: TextStyle(
+                                    child: Text(
+                                      lang?.createAnAccount ?? '',
+                                      style: const TextStyle(
                                         color: Color(0xff2D5356),
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w300,

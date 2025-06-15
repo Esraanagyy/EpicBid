@@ -7,6 +7,7 @@ import 'package:epicBid/widgets/bottom_navigation_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../l10n/app_localizations.dart';
 import 'cart_page.dart';
 
 class AuctionPage extends StatelessWidget {
@@ -23,6 +24,7 @@ class AuctionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return BlocProvider(
       create: (context) => ProductCubit()..getProducts(),
       child: BlocConsumer<ProductCubit, ProductStates>(
@@ -41,9 +43,9 @@ class AuctionPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "Auctions",
-                        style: TextStyle(
+                      Text(
+                        lang?.auctions ?? '',
+                        style: const TextStyle(
                           color: Colors.black,
                           fontFamily: 'Inter',
                           fontSize: 26,

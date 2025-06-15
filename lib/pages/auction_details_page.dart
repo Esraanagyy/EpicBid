@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubits/product_cubit/product_cubit.dart';
 import '../cubits/product_cubit/product_states.dart';
+import '../l10n/app_localizations.dart';
 
 class AuctionDetailsPage extends StatelessWidget {
   const AuctionDetailsPage({super.key});
@@ -16,8 +17,8 @@ class AuctionDetailsPage extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final int productId = args['id'];
     final String imagePath = args['image'];
+    var lang = AppLocalizations.of(context);
 
-    // Get screen dimensions
     final size = MediaQuery.of(context).size;
     final double padding = size.width * 0.05;
     final double appBarHeight = AppBar().preferredSize.height;
@@ -50,11 +51,11 @@ class AuctionDetailsPage extends StatelessWidget {
                   AssetImage("assets/icons/arrow.png"),
                 ),
               ),
-              title: const Padding(
-                padding: EdgeInsets.only(top: 8),
+              title: Padding(
+                padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  "Auction Details",
-                  style: TextStyle(
+                  lang?.auctionDetails ?? '',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,

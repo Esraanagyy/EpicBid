@@ -1,11 +1,17 @@
+part of 'basket_cubit.dart';
+
 abstract class BasketStates {}
 
-class BasketInitialStates extends BasketStates {}
+class BasketInitial extends BasketStates {}
 
-class CreateBasketSuccessState extends BasketStates {}
+class BasketLoading extends BasketStates {}
 
-class CreateBasketFailedState extends BasketStates {}
+class BasketSuccess extends BasketStates {
+  final String message;
+  BasketSuccess(this.message);
+}
 
-class CreateOrderSuccessStates extends BasketStates {}
-
-class CreateOrderFailedStates extends BasketStates {}
+class BasketError extends BasketStates {
+  final String errorMessage;
+  BasketError(this.errorMessage);
+}

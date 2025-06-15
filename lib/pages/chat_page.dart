@@ -5,12 +5,15 @@ import 'package:epicBid/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../l10n/app_localizations.dart';
+
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
   static String id = 'chat';
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final productId = args['productId']?.toString() ?? 'default_id';
@@ -42,7 +45,7 @@ class ChatPage extends StatelessWidget {
                 );
               },
               child: ImageIcon(
-                AssetImage('assets/icons/arrow.png'),
+                const AssetImage('assets/icons/arrow.png'),
                 size: size.width * 0.06, // Scaled icon size
               ),
             ),
@@ -51,7 +54,7 @@ class ChatPage extends StatelessWidget {
           title: Column(
             children: [
               Text(
-                "Auction Chat",
+                lang?.auctionChat ?? '',
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'Intel',
@@ -61,7 +64,7 @@ class ChatPage extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                "Online",
+                lang?.online ?? '',
                 style: TextStyle(
                   color: const Color(0xff656565),
                   fontFamily: 'Intel',
@@ -148,7 +151,7 @@ class ChatPage extends StatelessWidget {
                           'assets/icons/emoji.png',
                           width: size.width * 0.06,
                         ),
-                        hintText: 'Add your Message Here',
+                        hintText: lang?.addYourMessageHere,
                         hintStyle: TextStyle(
                           color: const Color(0xff4C4C4C),
                           fontFamily: 'Intel',

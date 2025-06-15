@@ -2,21 +2,26 @@ import 'package:epicBid/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import '../l10n/app_localizations.dart';
+
 class PaymentDone extends StatelessWidget {
   const PaymentDone({super.key});
-  static String id='pay';
+  static String id = 'pay';
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: 190,),
+            const SizedBox(
+              height: 190,
+            ),
             Text(
-              'Payment Done',
-              style: TextStyle(
+              lang?.paymentDone ?? '',
+              style: const TextStyle(
                 color: Color(0xff2D5356),
                 fontFamily: 'Inter',
                 fontSize: 52,
@@ -25,8 +30,7 @@ class PaymentDone extends StatelessWidget {
             ),
             Lottie.asset('assets/images/pay.json'),
             InkWell(
-              onTap: ()
-              {
+              onTap: () {
                 Navigator.pushNamed(context, HomePage.id);
               },
               child: Container(
@@ -38,21 +42,20 @@ class PaymentDone extends StatelessWidget {
                 ),
                 child: Center(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image.asset('assets/icons/left_double_arrow.png'),
-                        const Text(
-                          'Back To Home',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Inter',
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    )
-                ),
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Image.asset('assets/icons/left_double_arrow.png'),
+                    Text(
+                      lang?.backToHome ?? '',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Inter',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                )),
               ),
             ),
           ],

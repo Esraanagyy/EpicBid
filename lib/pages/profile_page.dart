@@ -9,47 +9,56 @@ import 'package:epicBid/widgets/log_out_widget.dart';
 import 'package:epicBid/widgets/profile_card.dart';
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import 'language_page.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
   static String id = 'profile';
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         centerTitle: true,
         leading: InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.pushNamed(context, HomePage.id);
           },
           child: Image.asset('assets/icons/arrow.png'),
         ),
-        title: const Text(
-              'My Profile',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Inter',
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+        title: Text(
+          lang?.myProfile ?? '',
+          style: const TextStyle(
+            color: Colors.black,
+            fontFamily: 'Inter',
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
       body: Column(
         children: [
-          const SizedBox(height: 18,),
+          const SizedBox(
+            height: 18,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Image.asset('assets/images/profile.png'),
               Column(
                 children: [
-                  const Text(
-                    'Sara Nagy',
-                    style: TextStyle(
+                  Text(
+                    lang?.saraNagy ?? '',
+                    style: const TextStyle(
                       color: Colors.black,
                       fontFamily: 'Inter',
                       fontSize: 26,
@@ -65,9 +74,11 @@ class ProfilePage extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.pushNamed(context, EditProfilePage.id);
                     },
                     child: Container(
@@ -77,10 +88,10 @@ class ProfilePage extends StatelessWidget {
                         color: const Color(0xff2D5356),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                         'Edit Profile',
-                          style: TextStyle(
+                          lang?.editProfile ?? '',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontFamily: 'Inter',
                             fontSize: 18,
@@ -94,74 +105,78 @@ class ProfilePage extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(height: 50,),
+          const SizedBox(
+            height: 50,
+          ),
           InkWell(
-            onTap: (){
+            onTap: () {
               Navigator.pushNamed(context, FavouritesPage.id);
             },
             child: ProfileCard(
-              text: 'Favourites',
+              text: lang?.favourites ?? '',
               photo: 'assets/icons/fav.png',
             ),
           ),
           const SizedBox(height: 10),
           InkWell(
-            onTap: (){
+            onTap: () {
               Navigator.pushNamed(context, AddressPage.id);
             },
             child: ProfileCard(
-                text: 'Address',
-                photo: 'assets/icons/address.png',
+              text: lang?.address ?? '',
+              photo: 'assets/icons/address.png',
             ),
           ),
           const SizedBox(height: 10),
-          const Divider(color: Color(0xffCCCCCC),),
+          const Divider(
+            color: Color(0xffCCCCCC),
+          ),
           const SizedBox(height: 10),
           InkWell(
-            onTap: (){
+            onTap: () {
               Navigator.pushNamed(context, LanguagePage.id);
             },
             child: ProfileCard(
-                text: 'Language',
-                photo: 'assets/icons/language.png',
+              text: lang?.language ?? '',
+              photo: 'assets/icons/language.png',
             ),
           ),
           const SizedBox(height: 10),
           InkWell(
-            onTap: (){
+            onTap: () {
               Navigator.pushNamed(context, MyProductsPage.id);
             },
             child: ProfileCard(
-                text: 'Products',
-                photo:'assets/icons/products.png',
+              text: lang?.products ?? '',
+              photo: 'assets/icons/products.png',
             ),
           ),
           const SizedBox(height: 10),
           ProfileCard(
-              text: 'Shipping',
-              photo: 'assets/icons/shipping.png',
+            text: lang?.shipping ?? '',
+            photo: 'assets/icons/shipping.png',
           ),
           const SizedBox(height: 10),
           InkWell(
-            onTap: (){
+            onTap: () {
               Navigator.pushNamed(context, MyAuctionsPage.id);
             },
             child: ProfileCard(
-                text: 'Auctions',
-                photo: 'assets/icons/auctions.png',
+              text: lang?.auctions ?? '',
+              photo: 'assets/icons/auctions.png',
             ),
           ),
           const SizedBox(height: 10),
-          const Divider(color: Color(0xffCCCCCC),),
+          const Divider(
+            color: Color(0xffCCCCCC),
+          ),
           const SizedBox(height: 10),
           InkWell(
-            onTap: (){
+            onTap: () {
               _showLogoutDialog(context);
             },
             child: ProfileCard(
-                text: 'log Out',
-                photo:'assets/icons/log_out.png'
-            ),
+                text: lang?.logOut ?? '', photo: 'assets/icons/log_out.png'),
           )
         ],
       ),
@@ -170,7 +185,6 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
-
 }
 
 void _showLogoutDialog(BuildContext context) {
@@ -182,7 +196,7 @@ void _showLogoutDialog(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        child: LogOutWidget(),
+        child: const LogOutWidget(),
       );
     },
   );

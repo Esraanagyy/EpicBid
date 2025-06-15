@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
+
 class CheckWidget extends StatelessWidget {
-  const CheckWidget({super.key});
+  final double totalPrice;
+
+  const CheckWidget({super.key, required this.totalPrice});
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.only(top: 20, left: 40, right: 40),
       child: Container(
@@ -14,15 +19,15 @@ class CheckWidget extends StatelessWidget {
           color: Colors.black,
           borderRadius: BorderRadius.circular(36),
         ),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
-              padding: EdgeInsets.only(left: 18),
+              padding: const EdgeInsets.only(left: 18),
               child: Text(
-                'Order Summary',
-                style: TextStyle(
+                lang?.orderSummary ?? '',
+                style: const TextStyle(
                   color: Colors.white,
                   fontFamily: 'Inter',
                   fontSize: 20,
@@ -30,16 +35,16 @@ class CheckWidget extends StatelessWidget {
                 ),
               ),
             ),
-            Divider(
+            const Divider(
               color: Colors.white,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  'Sub Total',
-                  style: TextStyle(
+                  lang?.subTotal ?? '',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontFamily: 'Inter',
                     fontSize: 16,
@@ -47,8 +52,8 @@ class CheckWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '2220 LE',
-                  style: TextStyle(
+                  '${totalPrice.toStringAsFixed(2)} LE',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontFamily: 'Inter',
                     fontSize: 16,
@@ -57,20 +62,20 @@ class CheckWidget extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  'Shipping Fee',
-                  style: TextStyle(
+                  lang?.shippingFree ?? '',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontFamily: 'Inter',
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                Text(
+                const Text(
                   '00.00 LE',
                   style: TextStyle(
                     color: Colors.white,
@@ -81,13 +86,13 @@ class CheckWidget extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  'Total',
-                  style: TextStyle(
+                  lang?.total ?? '',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontFamily: 'Inter',
                     fontSize: 16,
@@ -95,8 +100,8 @@ class CheckWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '2220 LE',
-                  style: TextStyle(
+                  '${totalPrice.toStringAsFixed(2)} LE',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontFamily: 'Inter',
                     fontSize: 16,

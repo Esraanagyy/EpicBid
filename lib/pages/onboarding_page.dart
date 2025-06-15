@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../l10n/app_localizations.dart';
 import '../widgets/onboarding_widget.dart';
 import 'login_page.dart';
 
@@ -45,6 +46,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -57,20 +59,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
               children: [
                 OnboardingWidget(
                   photo: 'assets/images/onboarding_1.jpg',
-                  title: 'Furniture E-Commerce',
-                  desc:
-                      'Here You Can Find Different Types Of \n Furniture And Styles',
+                  title: lang?.furnitureECommerce ?? 'ops!',
+                  desc: lang?.hereYouCanFindDifferentTypes ?? 'ops!',
                 ),
                 OnboardingWidget(
                   photo: 'assets/images/onboarding_2.jpg',
-                  title: 'Online Auctions',
-                  desc: 'Enjoy the electronic auction feature',
+                  title: lang?.onlineAuctions ?? 'ops!',
+                  desc: lang?.enjoyElectronicAuction ?? 'ops!',
                 ),
                 OnboardingWidget(
                   photo: 'assets/images/onboarding_3.jpg',
-                  title: 'Fast Delivery',
-                  desc:
-                      'Discreet and secure delivery to your door\n with dedicated furniture delivery\n methods.',
+                  title: lang?.fastDelivery ?? '',
+                  desc: lang?.discreetAndSecureDelivery ?? '',
                 ),
               ],
             ),

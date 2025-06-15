@@ -2,11 +2,12 @@ import 'package:epicBid/pages/payment_done.dart';
 import 'package:epicBid/widgets/check_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../widgets/credit_card_widget.dart';
 
 class CheckOutPage extends StatefulWidget {
   const CheckOutPage({super.key});
-   static String id ='check out';
+  static String id = 'check out';
 
   @override
   State<CheckOutPage> createState() => _CheckOutPageState();
@@ -16,19 +17,27 @@ class _CheckOutPageState extends State<CheckOutPage> {
   bool visaCheck = false;
   bool payCheck = false;
   bool cashCheck = false;
-  bool termCheck =false;
+  bool termCheck = false;
+
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
+
+    // Retrieve totalPrice from navigation arguments
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final double totalPrice = args?['totalPrice'] ?? 0.0;
+
     return Scaffold(
-    backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 8),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 8),
           child: Text(
-            'Check Out',
-            style: TextStyle(
+            lang?.checkOut ?? '',
+            style: const TextStyle(
               color: Colors.black,
               fontFamily: 'Inter',
               fontSize: 24,
@@ -40,12 +49,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CheckWidget(),
-          const Padding(
-            padding: EdgeInsets.only(left: 18,top: 25),
+          CheckWidget(totalPrice: totalPrice),
+          Padding(
+            padding: const EdgeInsets.only(left: 18, top: 25),
             child: Text(
-              'How You like To pay?',
-              style: TextStyle(
+              lang?.howYouLikeToPay ?? '',
+              style: const TextStyle(
                 color: Colors.black,
                 fontFamily: 'Intel',
                 fontSize: 18,
@@ -54,23 +63,23 @@ class _CheckOutPageState extends State<CheckOutPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top:8,left: 18,bottom: 5),
+            padding: const EdgeInsets.only(top: 8, left: 18, bottom: 5),
             child: Row(
               children: [
                 InkWell(
-                  onTap: ()
-                  {
+                  onTap: () {
                     setState(() {
-                      visaCheck=!visaCheck;
+                      visaCheck = !visaCheck;
                     });
-
                   },
-                  child: visaCheck ?Image.asset('assets/icons/check.png') :Image.asset('assets/icons/not check.png'),
+                  child: visaCheck
+                      ? Image.asset('assets/icons/check.png')
+                      : Image.asset('assets/icons/not check.png'),
                 ),
                 const SizedBox(width: 8),
-                const Text(
-                  'Credit Card ',
-                  style: TextStyle(
+                Text(
+                  lang?.creditCard ?? '',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'Intel',
                     fontSize: 18,
@@ -87,15 +96,13 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         builder: (context) {
                           return Padding(
                             padding: EdgeInsets.only(
-                              bottom: MediaQuery
-                                  .of(context)
-                                  .viewInsets
-                                  .bottom,
+                              bottom: MediaQuery.of(context).viewInsets.bottom,
                               top: 20,
                               left: 16,
                               right: 16,
                             ),
-                            child: const CreditCardWidget(), // Replace with your actual container
+                            child:
+                                const CreditCardWidget(), // Replace with your actual container
                           );
                         });
                   },
@@ -105,23 +112,23 @@ class _CheckOutPageState extends State<CheckOutPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 18,bottom: 5),
+            padding: const EdgeInsets.only(left: 18, bottom: 5),
             child: Row(
               children: [
                 InkWell(
-                  onTap: ()
-                  {
+                  onTap: () {
                     setState(() {
-                      payCheck=!payCheck;
+                      payCheck = !payCheck;
                     });
-
                   },
-                  child: payCheck ?Image.asset('assets/icons/check.png') :Image.asset('assets/icons/not check.png'),
+                  child: payCheck
+                      ? Image.asset('assets/icons/check.png')
+                      : Image.asset('assets/icons/not check.png'),
                 ),
                 const SizedBox(width: 8),
-                const Text(
-                  'PayPal',
-                  style: TextStyle(
+                Text(
+                  lang?.payPal ?? '',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'Intel',
                     fontSize: 18,
@@ -134,23 +141,23 @@ class _CheckOutPageState extends State<CheckOutPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 18,bottom: 5),
+            padding: const EdgeInsets.only(left: 18, bottom: 5),
             child: Row(
               children: [
                 InkWell(
-                  onTap: ()
-                  {
+                  onTap: () {
                     setState(() {
-                      cashCheck=!cashCheck;
+                      cashCheck = !cashCheck;
                     });
-
                   },
-                  child: cashCheck ?Image.asset('assets/icons/check.png') :Image.asset('assets/icons/not check.png'),
+                  child: cashCheck
+                      ? Image.asset('assets/icons/check.png')
+                      : Image.asset('assets/icons/not check.png'),
                 ),
                 const SizedBox(width: 8),
-                const Text(
-                  'Cash Service (Orange,Vodafone,We)',
-                  style: TextStyle(
+                Text(
+                  lang?.cashService ?? '',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'Intel',
                     fontSize: 18,
@@ -167,19 +174,19 @@ class _CheckOutPageState extends State<CheckOutPage> {
             child: Row(
               children: [
                 InkWell(
-                  onTap: ()
-                  {
+                  onTap: () {
                     setState(() {
-                      termCheck=!termCheck;
+                      termCheck = !termCheck;
                     });
-
                   },
-                  child: termCheck ?Image.asset('assets/icons/green_check.png') :Image.asset('assets/icons/not check.png'),
+                  child: termCheck
+                      ? Image.asset('assets/icons/green_check.png')
+                      : Image.asset('assets/icons/not check.png'),
                 ),
                 const SizedBox(width: 8),
-                const Text(
-                  'You Accept Terms & Conditions',
-                  style: TextStyle(
+                Text(
+                  lang?.youAcceptTerms ?? '',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'Intel',
                     fontSize: 16,
@@ -189,14 +196,25 @@ class _CheckOutPageState extends State<CheckOutPage> {
               ],
             ),
           ),
-
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 20,left: 16,right: 16),
+        padding: const EdgeInsets.only(bottom: 20, left: 16, right: 16),
         child: InkWell(
-          onTap: (){
-            Navigator.pushNamed(context, PaymentDone.id);
+          onTap: () {
+            if (termCheck && (visaCheck || payCheck || cashCheck)) {
+              Navigator.pushNamed(
+                context,
+                PaymentDone.id,
+                arguments: {'totalPrice': totalPrice},
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                    content: Text(
+                        'Please select a payment method and accept terms')),
+              );
+            }
           },
           child: Container(
             width: 404,
@@ -209,9 +227,9 @@ class _CheckOutPageState extends State<CheckOutPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Image.asset('assets/icons/circular_cart.png'),
-                const Text(
-                  'Pay',
-                  style: TextStyle(
+                Text(
+                  lang?.pay ?? '',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontFamily: 'Inter',
                     fontSize: 16,
@@ -219,13 +237,11 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   ),
                 ),
                 Image.asset('assets/icons/right_arrow.png'),
-
               ],
             ),
           ),
         ),
       ),
-
     );
   }
 }

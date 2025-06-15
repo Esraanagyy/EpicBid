@@ -1,13 +1,11 @@
 import 'package:epicBid/cubits/basket_cubit/basket_cubit.dart';
-import 'package:epicBid/cubits/basket_cubit/basket_states.dart';
 import 'package:epicBid/models/product_details_model.dart';
-import 'package:epicBid/pages/cart_page.dart';
+import 'package:epicBid/pages/check_out_page.dart';
 import 'package:epicBid/pages/review_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/basket_items_model.dart';
-import '../models/shipping_address_model.dart';
+import '../l10n/app_localizations.dart';
 
 class DetailsCard extends StatefulWidget {
   DetailsCard({
@@ -27,7 +25,7 @@ class _DetailsCardState extends State<DetailsCard> {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
+    var lang = AppLocalizations.of(context);
     final size = MediaQuery.of(context).size;
     final double padding = size.width * 0.043; // 18/420 ≈ 0.043
 
@@ -39,7 +37,17 @@ class _DetailsCardState extends State<DetailsCard> {
     return BlocProvider(
       create: (context) => BasketCubit(),
       child: BlocConsumer<BasketCubit, BasketStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is BasketSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          } else if (state is BasketError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.errorMessage)),
+            );
+          }
+        },
         builder: (context, state) {
           return Container(
             width: size.width * 0.95, // 400/420 ≈ 0.95
@@ -106,11 +114,11 @@ class _DetailsCardState extends State<DetailsCard> {
                     color: Colors.black,
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10, left: 18),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 18),
                   child: Text(
-                    "description",
-                    style: TextStyle(
+                    lang?.description ?? '',
+                    style: const TextStyle(
                       color: Colors.black,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
@@ -144,11 +152,11 @@ class _DetailsCardState extends State<DetailsCard> {
                     color: Colors.black,
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10, left: 18),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 18),
                   child: Text(
-                    "Color",
-                    style: TextStyle(
+                    lang?.color ?? '',
+                    style: const TextStyle(
                       color: Colors.black,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
@@ -206,9 +214,9 @@ class _DetailsCardState extends State<DetailsCard> {
                   padding: const EdgeInsets.only(top: 8, left: 19),
                   child: Row(
                     children: [
-                      const Text(
-                        "Review Rate",
-                        style: TextStyle(
+                      Text(
+                        lang?.reviewRate ?? '',
+                        style: const TextStyle(
                           color: Colors.black,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -218,11 +226,21 @@ class _DetailsCardState extends State<DetailsCard> {
                       const SizedBox(width: 8),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, ReviewPage.id);
+                          Navigator.pushNamed(
+                            context,
+                            ReviewPage.id,
+                            arguments: {
+                              "imagePath": widget.imagePath,
+                              "productName":
+                                  widget.product.name ?? 'Unknown Product',
+                              "price": widget.product.price ?? 0.0,
+                              "productId": widget.product.id,
+                            },
+                          );
                         },
-                        child: const Text(
-                          "Add Review",
-                          style: TextStyle(
+                        child: Text(
+                          lang?.addReview ?? '',
+                          style: const TextStyle(
                             color: Color(0xff2D5356),
                             decoration: TextDecoration.underline,
                             decorationColor: Color(0xff2D5356),
@@ -308,9 +326,9 @@ class _DetailsCardState extends State<DetailsCard> {
                       ),
                       Row(
                         children: [
-                          const Text(
-                            "Total: ",
-                            style: TextStyle(
+                          Text(
+                            lang?.total ?? '',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontFamily: 'Inter',
                               fontSize: 16,
@@ -347,43 +365,21 @@ class _DetailsCardState extends State<DetailsCard> {
                     children: [
                       InkWell(
                         onTap: () {
-                          final basketId =
-                              'basket_${DateTime.now().millisecondsSinceEpoch}';
-                          final items = [
-                            BasketItemModel(
-                              id: widget.product.id!,
-                              productName: widget.product.name ?? '',
-                              pictureUrl: widget.imagePath ?? '',
-                              price: widget.product.price ?? 0.0,
-                              quantity: quantity,
-                            ),
-                          ];
-
-                          BlocProvider.of<BasketCubit>(context).createBasket(
-                            basketId: basketId,
-                            items: items,
-                          );
-
-                          print(
-                              '✅ Basket created successfully with ID: $basketId and items: $items');
-
-                          BlocProvider.of<BasketCubit>(context).createOrder(
-                            basketId: basketId,
-                            DeliverMethodId: 1, // hardcoded/dummy
-                            address: [
-                              ShippingAddressModel(
-                                firstName: 'John',
-                                lastName: 'Doe',
-                                street: '123 Main St',
-                                city: 'Cairo',
-                                country: 'Egypt',
-                              ),
-                            ],
-                          );
-
-                          print(
-                              '✅ Order created successfully for basket ID: $basketId');
-                          Navigator.pushNamed(context, CartPage.id);
+                          if (quantity > 0) {
+                            context.read<BasketCubit>().addToCart(
+                                  productId: widget.product.id!,
+                                  productName: widget.product.name!,
+                                  price: widget.product.price!,
+                                  imagePath: widget.imagePath,
+                                  quantity: quantity,
+                                );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      'Please select a quantity greater than 0')),
+                            );
+                          }
                         },
                         child: Container(
                           width: size.width * 0.15, // 63/420 ≈ 0.15
@@ -406,20 +402,25 @@ class _DetailsCardState extends State<DetailsCard> {
                           color: const Color(0xff2D5356),
                           borderRadius: BorderRadius.circular(62),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.only(top: 18),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 18),
                           child: FittedBox(
                             fit: BoxFit.contain,
-                            child: Text(
-                              "Buy Now",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Inter',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, CheckOutPage.id);
+                              },
+                              child: Text(
+                                lang?.buyNow ?? '',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Inter',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),
