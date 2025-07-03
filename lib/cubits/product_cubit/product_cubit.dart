@@ -10,26 +10,68 @@ import '../../models/product_details_model.dart';
 class ProductCubit extends Cubit<ProductStates> {
   ProductCubit() : super(ProductInitialState());
 
-  //get products
+  // Pagination variables
   List<ProductModel> products = [];
-  void getProducts() async {
-    http.Response response = await http.get(
-      Uri.parse('http://ebic-bid11.runasp.net/api/Product/GetAllProducts'),
-    );
-    var responseBody = jsonDecode(response.body);
+  List<ProductModel> filteredProducts = [];
+  int pageIndex = 1; // Start with page 1
+  int pageSize = 10; // Default page size
+  bool isLoadingMore = false; // Track loading state
+  bool hasMore = true; // Track if more products are available
 
-    if (response.statusCode == 200) {
-      for (var item in responseBody['data']) {
-        products.add(ProductModel.fromJson(data: item));
-      }
-      emit(GetProductSuccessState());
+  // Get products with pagination
+  void getProducts({bool loadMore = false}) async {
+    if (isLoadingMore || !hasMore)
+      return; // Prevent multiple simultaneous requests
+
+    isLoadingMore = true;
+    if (!loadMore) {
+      emit(ProductLoadingState());
     } else {
+      emit(LoadMoreProductsState());
+    }
+
+    try {
+      final uri = Uri.parse(
+        'http://ebic-bid11.runasp.net/api/Product/GetAllProducts?pageindex=$pageIndex&Pagesize=$pageSize',
+      );
+      http.Response response = await http.get(uri);
+      var responseBody = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        // Clear products if not loading more (i.e., initial load or refresh)
+        if (!loadMore) {
+          products.clear();
+          filteredProducts.clear();
+        }
+
+        // Add new products
+        for (var item in responseBody['data']) {
+          products.add(ProductModel.fromJson(data: item));
+        }
+
+        // Check if there are more products to load
+        if (responseBody['data'].length < pageSize) {
+          hasMore = false; // No more products to load
+        }
+
+        // Increment pageIndex for the next load
+        if (loadMore) {
+          pageIndex++;
+        }
+
+        emit(GetProductSuccessState());
+      } else {
+        emit(GetProductFailState());
+      }
+    } catch (e) {
+      print('Error fetching products: $e');
       emit(GetProductFailState());
+    } finally {
+      isLoadingMore = false;
     }
   }
 
-  // search
-  List<ProductModel> filteredProducts = [];
+  // Search
   void filterProducts({required String input}) {
     filteredProducts = products
         .where((element) =>
@@ -38,7 +80,7 @@ class ProductCubit extends Cubit<ProductStates> {
     emit(FilterProductsSuccessState());
   }
 
-  //get product by id
+  // Get product by id
   ProductDetailsModel? productDetails;
   void getProductDetails(int productId) async {
     try {
@@ -66,7 +108,7 @@ class ProductCubit extends Cubit<ProductStates> {
     }
   }
 
-  //add product
+  // Add product
   void addProduct({
     required String name,
     required String description,
@@ -111,5 +153,14 @@ class ProductCubit extends Cubit<ProductStates> {
       print('Error during registration: $e');
       emit(AddProductFailedState());
     }
+  }
+
+  // Reset pagination for a fresh fetch
+  void resetPagination() {
+    pageIndex = 1;
+    hasMore = true;
+    products.clear();
+    filteredProducts.clear();
+    getProducts();
   }
 }

@@ -24,6 +24,10 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     var lang = AppLocalizations.of(context);
+    // Get the latest address, if any
+    final address =
+        AddressData.addresses.isNotEmpty ? AddressData.addresses.last : null;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -55,6 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Image.asset('assets/images/profile.png'),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     lang?.saraNagy ?? '',
@@ -72,6 +77,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       fontFamily: 'Inter',
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  // Display address or fallback
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      address != null ? '${address.city}' : 'No address saved',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Inter',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   const SizedBox(
@@ -185,19 +205,19 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-}
 
-void _showLogoutDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    barrierDismissible: true,
-    builder: (BuildContext context) {
-      return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: const LogOutWidget(),
-      );
-    },
-  );
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: const LogOutWidget(),
+        );
+      },
+    );
+  }
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:epicBid/pages/login_page.dart';
 import 'package:epicBid/pages/onboarding_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void initState() {
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 5), () {
       Navigator.pushNamed(context, OnboardingPage.id);
     });
     super.initState();

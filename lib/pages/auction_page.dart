@@ -20,6 +20,11 @@ class AuctionPage extends StatelessWidget {
     'assets/images/top table.png',
     'assets/images/second table.png',
     'assets/images/top lamp.png',
+    'assets/images/store_sofa.jpg',
+    'assets/images/purble_pillow.jpg'
+        'assets/images/white chair.jpg',
+    'assets/images/great lamp.jpg',
+    'assets/images/bookshelf.png',
   ];
 
   @override

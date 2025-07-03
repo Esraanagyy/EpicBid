@@ -7,72 +7,86 @@ class OfferPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late int productId;
+    // Extract productId from arguments
     final args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-    productId = args?['productId'] as int? ?? 0;
+    final productId = args?['productId'] as int? ?? 0;
+
+    // Get screen dimensions for responsiveness
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      extendBodyBehindAppBar: true, // Make app bar transparent over background
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: const ImageIcon(
+            AssetImage("assets/icons/arrow.png"),
+            color: Colors.white, // Ensure icon is visible on background
+            size: 24, // Responsive icon size
+          ),
+        ),
+      ),
       body: Stack(
         children: [
+          // Background image
           Positioned.fill(
             child: Image.asset(
               'assets/images/bid.jpg',
-              fit: BoxFit.cover,
+              fit: BoxFit.cover, // Scale image to cover screen
+              alignment: Alignment.center, // Center image to avoid distortion
             ),
           ),
-
-          // Scaffold content
-          Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0, // Remove shadow
-              leading: InkWell(
-                onTap: () => Navigator.pop(context),
-                child: const ImageIcon(
-                  AssetImage("assets/icons/arrow.png"),
-                ),
-              ),
-            ),
-            body: Container(
-              color: Colors.transparent,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 800, // Adjust this position as needed
-                    left: 25,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          PlaceBidPage.id,
-                          arguments: {'productId': productId},
-                        );
-                      },
-                      child: Container(
-                        width: 410,
-                        height: 53,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffD09423),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Add Offer",
-                            style: TextStyle(
-                              color: Color(0xffFAFAFA),
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 24,
-                            ),
+          // Foreground content
+          SafeArea(
+            child: Column(
+              children: [
+                const Spacer(), // Push button to bottom
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.05, // 5% of screen width
+                    vertical: screenHeight * 0.02, // 2% of screen height
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        PlaceBidPage.id,
+                        arguments: {'productId': productId},
+                      );
+                    },
+                    child: Container(
+                      width: double.infinity, // Full width minus padding
+                      height: screenHeight *
+                          0.07, // 7% of screen height (approx. 50-60px)
+                      constraints: const BoxConstraints(
+                        minHeight: 45,
+                        maxHeight: 60,
+                      ), // Constrain height for small/large screens
+                      decoration: BoxDecoration(
+                        color: const Color(0xffD09423),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Add Offer",
+                          style: TextStyle(
+                            color: const Color(0xffFAFAFA),
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                            fontSize: screenWidth *
+                                0.06, // Responsive font size (approx. 20-24px)
+                            letterSpacing: 0.5,
                           ),
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

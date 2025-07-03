@@ -1,24 +1,26 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class OfferCard extends StatelessWidget {
   OfferCard({
     super.key,
     required this.productName,
-    required this.image,
+    this.image,
     required this.price,
     required this.color,
   });
-  String image;
+
+  String? image;
   String productName;
   String price;
   Color color;
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
     final size = MediaQuery.of(context).size;
-    final double horizontalPadding = size.width * 0.05; // 5% of screen width
-    final double verticalPadding = size.height * 0.03; // 3% of screen height
+    final double horizontalPadding = size.width * 0.05;
+    final double verticalPadding = size.height * 0.03;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -27,8 +29,8 @@ class OfferCard extends StatelessWidget {
         right: horizontalPadding,
       ),
       child: Container(
-        width: size.width * 0.9, // 90% of screen width
-        height: size.height * 0.12, // 12% of screen height
+        width: size.width * 0.9,
+        height: size.height * 0.12,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(32),
@@ -37,17 +39,46 @@ class OfferCard extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             Positioned(
-              top: size.height * -0.06, // Scaled offset
-              child: Image.asset(
-                image,
-                width: size.width * 0.35, // Scaled image size
-                height: size.width * 0.35,
-              ),
+              top: size.height * -0.06,
+              child: image != null && image!.isNotEmpty
+                  ? File(image!).existsSync()
+                      ? Image.file(
+                          File(image!),
+                          width: size.width * 0.35,
+                          height: size.width * 0.35,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Image.asset(
+                            'assets/images/placeholder.png',
+                            width: size.width * 0.35,
+                            height: size.width * 0.35,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Image.asset(
+                          image!,
+                          width: size.width * 0.35,
+                          height: size.width * 0.35,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Image.asset(
+                            'assets/images/placeholder.png',
+                            width: size.width * 0.35,
+                            height: size.width * 0.35,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                  : Image.asset(
+                      'assets/images/placeholder.png',
+                      width: size.width * 0.35,
+                      height: size.width * 0.35,
+                      fit: BoxFit.cover,
+                    ),
             ),
             Padding(
               padding: EdgeInsets.only(
                 top: size.height * 0.02,
-                left: size.width * 0.38, // Scaled text position
+                left: size.width * 0.38,
               ),
               child: Text(
                 productName,
@@ -57,6 +88,7 @@ class OfferCard extends StatelessWidget {
                   fontSize: 22,
                   fontWeight: FontWeight.w300,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             Padding(
@@ -69,14 +101,15 @@ class OfferCard extends StatelessWidget {
                 style: const TextStyle(
                   color: Colors.black,
                   fontFamily: 'Inter',
-                  fontSize: 22,
+                  fontSize: 20, // Slightly smaller to fit longer prices
                   fontWeight: FontWeight.w600,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: size.width * 0.82, // Scaled icon position
+                left: size.width * 0.82,
                 top: size.height * 0.04,
               ),
               child: const ImageIcon(

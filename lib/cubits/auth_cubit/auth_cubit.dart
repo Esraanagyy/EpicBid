@@ -29,6 +29,8 @@ class AuthCubit extends Cubit<AuthStates> {
       );
 
       var responseBody = jsonDecode(response.body);
+      print('Status code: ${response.statusCode}');
+      print('Body: ${response.body}');
 
       if (response.statusCode == 200) {
         emit(RegisterSuccessState());

@@ -18,6 +18,9 @@ class GetProductDetailsFailState extends ProductStates {}
 
 class ProductLoadingState extends ProductStates {}
 
+class LoadMoreProductsState
+    extends ProductStates {} // New state for loading more products
+
 class AddProductSuccessState extends ProductStates {}
 
 class AddProductFailedState extends ProductStates {}
